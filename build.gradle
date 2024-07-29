@@ -39,7 +39,6 @@ subprojects {
         relocate("com.zaxxer.hikari", "${libsBase}.hikari")
         relocate("xyz.xenondevs.invui", "${libsBase}.invui")
         relocate("xyz.xenondevs.inventoryaccess", "${libsBase}.inventoryaccess")
-        relocate("com.cryptomorin.xseries", "${libsBase}.xseries")
     }
 
     processResources {
