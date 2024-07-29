@@ -19,7 +19,7 @@ public class SetupCommand extends SubCommand {
         if (!(sender instanceof Player player)) throw new OnlyPlayersException();
 
         if (plugin.getSetupManager().inSetup(player)) {
-            new SetupMenu().open(player);
+            new SetupMenu(plugin.getSetupManager().getSession(player)).open(player);
             return;
         }
 

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public abstract class ConfiguredItem extends AbstractItem {
     protected static final BedwarsPlugin plugin = BedwarsPlugin.getInstance();
-    private final String id;
+    protected final String id;
 
     public ItemBuilder overrideBase() {
         return null;

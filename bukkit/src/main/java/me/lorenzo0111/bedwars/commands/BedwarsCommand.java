@@ -7,6 +7,7 @@ import me.lorenzo0111.bedwars.commands.exceptions.UsageException;
 import me.lorenzo0111.bedwars.commands.subcommands.HelpCommand;
 import me.lorenzo0111.bedwars.commands.subcommands.NotFoundCommand;
 import me.lorenzo0111.bedwars.commands.subcommands.ReloadCommand;
+import me.lorenzo0111.bedwars.commands.subcommands.SetupCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -25,6 +26,7 @@ public class BedwarsCommand implements TabExecutor {
 
         register(new HelpCommand(this));
         register(new ReloadCommand(this));
+        register(new SetupCommand(this));
     }
 
     @Override

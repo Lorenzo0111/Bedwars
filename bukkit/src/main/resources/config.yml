@@ -8,6 +8,24 @@ mysql:
 
 menus:
   items:
+    set-arenas:
+      type: "DIAMOND_SWORD"
+      name: "&7Set Arenas"
+      lore:
+        - "&7Click to &c&nset&7 the &c&narena count&7."
+
+    set-min-players:
+      type: "ENDER_PEARL"
+      name: "&7Set Min Players"
+      lore:
+        - "&7Click to &c&nset&7 the &c&nrequired players&7."
+
+    set-team-players:
+      type: "MAGMA_CREAM"
+      name: "&7Set Team Players"
+      lore:
+        - "&7Click to &c&nset&7 the &c&nplayers per team&7."
+
     previous:
       type: "ARROW"
       name: "&cPrevious page"
@@ -34,7 +52,7 @@ menus:
     title: "&7Arena Setup"
     structure:
       - "# # # # # # # # #"
-      - "# . . . . . . . #"
+      - "# . A . M . T . #"
       - "# . . . . . . . #"
       - "# . . . . . . . #"
       - "# # # # # # # # #"
@@ -45,7 +63,12 @@ messages:
   only-players: "&cOnly players can use this command."
   no-permission: "&cYou do not have permission to use this command."
   invalid-usage: "&7Invalid usage. Please use &c&n%usage%&7."
+  invalid-number: "&cThe number you entered is invalid."
   error: "&cAn error occurred while executing this command. Error: %error%"
   reload: "&7The plugin has been reloaded."
   world-not-found: "&cThe world you entered was not found."
   setup-started: "&7The setup has started."
+  setup:
+    set-arenas: "&7Please enter the &c&narena count&7."
+    set-min-players: "&7Please enter the &c&nrequired players&7."
+    set-team-players: "&7Please enter the &c&nplayers per team&7."
