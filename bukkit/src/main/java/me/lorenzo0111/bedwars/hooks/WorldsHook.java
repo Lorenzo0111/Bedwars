@@ -25,17 +25,20 @@ public class WorldsHook {
         loader = hook.getLoader("mysql");
     }
 
-    public static CompletableFuture<Void> createWorld(UUID uuid, String template) {
+    public static CompletableFuture<Boolean> createWorld(UUID uuid, String template) {
         return plugin.getScheduler().runAsync(() -> {
-            if (hook.getWorld(uuid.toString()) != null) return;
+            if (hook.getWorld(uuid.toString()) != null) return true;
 
             File worldDir = new File(plugin.getDataFolder(), template);
+            if (!worldDir.exists()) return false;
 
             try {
                 hook.importWorld(worldDir, uuid.toString(), loader);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+
+            return true;
         });
     }
 

@@ -18,16 +18,38 @@ public class SetupManager {
 
     public void startSetup(Player player, String id) {
         WorldsHook.createWorld(player.getUniqueId(), id)
-                .thenAccept(ignored -> WorldsHook.loadWorld(player.getUniqueId())
-                        .thenAccept(world -> {
-                            World bukkitWorld = Bukkit.getWorld(world.getName());
+                .thenAccept(success -> {
+                    if (!success) {
+                        player.sendMessage(plugin.getPrefixed("world-not-found"));
+                        return;
+                    }
 
-                            sessions.put(player, new SetupSession(
-                                    bukkitWorld,
-                                    new GameConfiguration(id)
-                            ));
+                    WorldsHook.loadWorld(player.getUniqueId())
+                            .thenAccept(world -> {
+                                World bukkitWorld = Bukkit.getWorld(world.getName());
 
-                            player.teleport(bukkitWorld.getSpawnLocation());
-                        }));
+                                sessions.put(player, new SetupSession(
+                                        bukkitWorld,
+                                        new GameConfiguration(id)
+                                ));
+
+                                player.teleport(bukkitWorld.getSpawnLocation());
+                                player.sendMessage(plugin.getPrefixed("setup-started"));
+                            });
+                });
+    }
+
+    public boolean inSetup(Player player) {
+        return sessions.containsKey(player);
+    }
+
+    public SetupSession getSession(Player player) {
+        return sessions.get(player);
+    }
+
+    public void endSetup(Player player) {
+        if (inSetup(player)) getSession(player).save();
+
+        sessions.remove(player);
     }
 }

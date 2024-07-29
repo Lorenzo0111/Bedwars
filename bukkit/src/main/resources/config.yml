@@ -30,8 +30,8 @@ menus:
         type: "BLACK_STAINED_GLASS_PANE"
         name: "&r"
 
-  example:
-    title: "&7Example"
+  setup:
+    title: "&7Arena Setup"
     structure:
       - "# # # # # # # # #"
       - "# . . . . . . . #"
@@ -47,3 +47,5 @@ messages:
   invalid-usage: "&7Invalid usage. Please use &c&n%usage%&7."
   error: "&cAn error occurred while executing this command. Error: %error%"
   reload: "&7The plugin has been reloaded."
+  world-not-found: "&cThe world you entered was not found."
+  setup-started: "&7The setup has started."
