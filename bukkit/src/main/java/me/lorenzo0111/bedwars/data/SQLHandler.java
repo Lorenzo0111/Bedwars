@@ -3,7 +3,6 @@ package me.lorenzo0111.bedwars.data;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import me.lorenzo0111.bedwars.BedwarsPlugin;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.sql.Connection;

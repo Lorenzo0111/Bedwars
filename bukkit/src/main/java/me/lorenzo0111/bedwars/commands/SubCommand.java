@@ -2,6 +2,8 @@ package me.lorenzo0111.bedwars.commands;
 
 import me.lorenzo0111.bedwars.BedwarsPlugin;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +12,8 @@ public abstract class SubCommand {
     protected final BedwarsPlugin plugin;
     protected final BedwarsCommand command;
 
-    public SubCommand(BedwarsCommand command) {
+    @Contract(pure = true)
+    public SubCommand(@NotNull BedwarsCommand command) {
         this.command = command;
         this.plugin = command.getPlugin();
     }

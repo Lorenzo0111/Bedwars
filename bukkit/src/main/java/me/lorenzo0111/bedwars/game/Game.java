@@ -37,7 +37,7 @@ public class Game extends AbstractGame {
 
         teams.forEach((color, players) -> players.forEach(player ->
                 player.teleport(config.getTeams()
-                        .get(color).getSpawn())));
+                        .get(color).getSpawn().toLocation(world))));
     }
 
     @Override

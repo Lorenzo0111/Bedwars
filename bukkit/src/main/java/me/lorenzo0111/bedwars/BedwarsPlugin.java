@@ -4,11 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import me.lorenzo0111.bedwars.api.BedwarsAPI;
 import me.lorenzo0111.bedwars.api.game.TeamAssigner;
+import me.lorenzo0111.bedwars.api.game.config.ConfigLocation;
 import me.lorenzo0111.bedwars.api.game.config.GameConfiguration;
 import me.lorenzo0111.bedwars.api.game.config.TeamConfig;
 import me.lorenzo0111.bedwars.commands.BedwarsCommand;
 import me.lorenzo0111.bedwars.data.SQLHandler;
 import me.lorenzo0111.bedwars.game.GameManager;
+import me.lorenzo0111.bedwars.game.setup.SetupManager;
 import me.lorenzo0111.bedwars.game.assign.RandomTeamAssigner;
 import me.lorenzo0111.bedwars.hooks.WorldsHook;
 import me.lorenzo0111.bedwars.utils.BukkitScheduler;
@@ -29,10 +31,12 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
     private BukkitScheduler scheduler;
     private SQLHandler database;
     private GameManager gameManager;
+    private SetupManager setupManager;
     @Setter private TeamAssigner teamAssigner;
 
     @Override
     public void onLoad() {
+        ConfigurationSerialization.registerClass(ConfigLocation.class);
         ConfigurationSerialization.registerClass(TeamConfig.class);
         ConfigurationSerialization.registerClass(GameConfiguration.class);
     }
@@ -55,6 +59,7 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
         this.database = new SQLHandler(this);
         this.teamAssigner = new RandomTeamAssigner();
         this.gameManager = new GameManager(this);
+        this.setupManager = new SetupManager(this);
 
         this.reload();
         this.firstRun = false;
