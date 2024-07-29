@@ -12,6 +12,8 @@ import java.util.Map;
 public class GameConfiguration implements ConfigurationSerializable {
     private final String id;
     private final Map<ChatColor, TeamConfig> teams = new HashMap<>();
+    private int arenas;
+    private int playersPerTeam;
 
     public GameConfiguration(String id) {
         this.id = id;
@@ -20,6 +22,8 @@ public class GameConfiguration implements ConfigurationSerializable {
     @SuppressWarnings({"unused", "unchecked"})
     public GameConfiguration(Map<String, Object> data) {
         this.id = (String) data.get("id");
+        this.arenas = (int) data.get("arenas");
+        this.playersPerTeam = (int) data.get("playersPerTeam");
 
         Map<String, Object> teams = (Map<String, Object>) data.get("teams");
         teams.forEach((color, config) -> this.teams.put(ChatColor.valueOf(color),
@@ -34,6 +38,8 @@ public class GameConfiguration implements ConfigurationSerializable {
 
         return Map.of(
                 "id", id,
+                "arenas", arenas,
+                "playersPerTeam", playersPerTeam,
                 "teams", teams
         );
     }

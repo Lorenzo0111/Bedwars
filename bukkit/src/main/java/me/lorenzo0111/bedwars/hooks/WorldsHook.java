@@ -69,9 +69,9 @@ public class WorldsHook {
     }
 
     public static CompletableFuture<Void> deleteWorld(UUID uuid) {
-        plugin.getScheduler().ensureSync(() -> unloadWorld(uuid, false)).join();
-
         return plugin.getScheduler().runAsync(() -> {
+            plugin.getScheduler().ensureSync(() -> unloadWorld(uuid, false)).join();
+
             try {
                 loader.deleteWorld(uuid.toString());
             } catch (UnknownWorldException | IOException e) {

@@ -1,12 +1,15 @@
 package me.lorenzo0111.bedwars;
 
 import lombok.Getter;
+import lombok.Setter;
 import me.lorenzo0111.bedwars.api.BedwarsAPI;
+import me.lorenzo0111.bedwars.api.game.TeamAssigner;
 import me.lorenzo0111.bedwars.api.game.config.GameConfiguration;
 import me.lorenzo0111.bedwars.api.game.config.TeamConfig;
 import me.lorenzo0111.bedwars.commands.BedwarsCommand;
 import me.lorenzo0111.bedwars.data.SQLHandler;
 import me.lorenzo0111.bedwars.game.GameManager;
+import me.lorenzo0111.bedwars.game.assign.RandomTeamAssigner;
 import me.lorenzo0111.bedwars.hooks.WorldsHook;
 import me.lorenzo0111.bedwars.utils.BukkitScheduler;
 import me.lorenzo0111.bedwars.utils.StringUtils;
@@ -26,6 +29,7 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
     private BukkitScheduler scheduler;
     private SQLHandler database;
     private GameManager gameManager;
+    @Setter private TeamAssigner teamAssigner;
 
     @Override
     public void onLoad() {
@@ -49,6 +53,7 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
 
         this.scheduler = new BukkitScheduler(this);
         this.database = new SQLHandler(this);
+        this.teamAssigner = new RandomTeamAssigner();
         this.gameManager = new GameManager(this);
 
         this.reload();
