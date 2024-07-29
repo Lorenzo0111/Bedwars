@@ -1,5 +1,6 @@
 package me.lorenzo0111.bedwars.gui.items;
 
+import lombok.RequiredArgsConstructor;
 import me.lorenzo0111.bedwars.BedwarsPlugin;
 import org.bukkit.Material;
 import xyz.xenondevs.invui.item.ItemProvider;
@@ -11,13 +12,10 @@ import xyz.xenondevs.invui.item.impl.AbstractItem;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public abstract class ConfiguredItem extends AbstractItem {
     protected static final BedwarsPlugin plugin = BedwarsPlugin.getInstance();
     private final String id;
-
-    public ConfiguredItem(String id) {
-        this.id = id;
-    }
 
     public ItemBuilder overrideBase() {
         return null;

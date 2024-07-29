@@ -1,5 +1,6 @@
 package me.lorenzo0111.bedwars.commands;
 
+import lombok.Getter;
 import me.lorenzo0111.bedwars.BedwarsPlugin;
 import me.lorenzo0111.bedwars.commands.exceptions.OnlyPlayersException;
 import me.lorenzo0111.bedwars.commands.exceptions.UsageException;
@@ -14,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class BedwarsCommand implements TabExecutor {
     private final BedwarsPlugin plugin;
     private final List<SubCommand> subCommands = new ArrayList<>();
@@ -79,16 +81,8 @@ public class BedwarsCommand implements TabExecutor {
         return new NotFoundCommand(this);
     }
 
-    public BedwarsPlugin getPlugin() {
-        return plugin;
-    }
-
     public void register(SubCommand subCommand) {
         this.subCommands.add(subCommand);
-    }
-
-    public List<SubCommand> getSubCommands() {
-        return subCommands;
     }
 
     @Override

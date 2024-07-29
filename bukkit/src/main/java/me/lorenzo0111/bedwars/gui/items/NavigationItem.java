@@ -1,5 +1,6 @@
 package me.lorenzo0111.bedwars.gui.items;
 
+import lombok.RequiredArgsConstructor;
 import me.lorenzo0111.bedwars.BedwarsPlugin;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -14,12 +15,9 @@ import xyz.xenondevs.invui.item.impl.controlitem.ControlItem;
 
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public class NavigationItem extends ControlItem<PagedGui<?>> {
     private final boolean forward;
-
-    public NavigationItem(boolean forward) {
-        this.forward = forward;
-    }
 
     @Override
     public ItemProvider getItemProvider(PagedGui<?> gui) {

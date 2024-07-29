@@ -2,12 +2,17 @@ package me.lorenzo0111.bedwars;
 
 import lombok.Getter;
 import me.lorenzo0111.bedwars.api.BedwarsAPI;
+import me.lorenzo0111.bedwars.api.game.config.GameConfiguration;
+import me.lorenzo0111.bedwars.api.game.config.TeamConfig;
 import me.lorenzo0111.bedwars.commands.BedwarsCommand;
 import me.lorenzo0111.bedwars.data.SQLHandler;
 import me.lorenzo0111.bedwars.game.GameManager;
+import me.lorenzo0111.bedwars.hooks.WorldsHook;
+import me.lorenzo0111.bedwars.utils.BukkitScheduler;
 import me.lorenzo0111.bedwars.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -18,8 +23,15 @@ import java.util.logging.Level;
 public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
     @Getter private static BedwarsPlugin instance;
     private boolean firstRun = true;
+    private BukkitScheduler scheduler;
     private SQLHandler database;
     private GameManager gameManager;
+
+    @Override
+    public void onLoad() {
+        ConfigurationSerialization.registerClass(TeamConfig.class);
+        ConfigurationSerialization.registerClass(GameConfiguration.class);
+    }
 
     @Override
     @SuppressWarnings("ConstantConditions")
@@ -33,6 +45,9 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
 
+        WorldsHook.init();
+
+        this.scheduler = new BukkitScheduler(this);
         this.database = new SQLHandler(this);
         this.gameManager = new GameManager(this);
 

@@ -19,7 +19,7 @@ public class SQLHandler {
 
     public SQLHandler(BedwarsPlugin plugin) {
         this.plugin = plugin;
-        this.executor = (cmd) -> Bukkit.getScheduler().runTaskAsynchronously(plugin, cmd);
+        this.executor = plugin.getScheduler()::runAsync;
     }
 
     public void init() throws SQLException {

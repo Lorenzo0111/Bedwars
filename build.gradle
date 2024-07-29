@@ -28,12 +28,14 @@ subprojects {
         maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
         maven { url 'https://repo.xenondevs.xyz/releases' }
         maven { url 'https://repo.papermc.io/repository/maven-public/' }
+        maven { url 'https://repo.infernalsuite.com/repository/maven-snapshots/' }
     }
 
     dependencies {
         compileOnly('org.jetbrains:annotations:24.1.0')
         compileOnly('org.spigotmc:spigot-api:1.21-R0.1-SNAPSHOT')
         compileOnly('org.projectlombok:lombok:1.18.34')
+        compileOnly('com.infernalsuite.aswm:api:1.20.4-R0.1-SNAPSHOT')
         annotationProcessor('org.projectlombok:lombok:1.18.34')
     }
 
