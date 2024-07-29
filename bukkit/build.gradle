@@ -3,6 +3,7 @@ dependencies {
     implementation('org.bstats:bstats-bukkit:3.0.2')
     implementation('xyz.xenondevs.invui:invui:1.33')
     implementation("com.github.cryptomorin:XSeries:11.2.0.1")
+    implementation('com.zaxxer:HikariCP:4.0.3')
     compileOnly('org.spigotmc:spigot-api:1.21-R0.1-SNAPSHOT')
 }
 
