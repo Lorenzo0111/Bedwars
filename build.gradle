@@ -1,0 +1,54 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id 'java'
+    id "io.github.goooler.shadow" version "8.1.8"
+}
+
+version = '1.0-SNAPSHOT'
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.github.goooler.shadow'
+
+    group = 'me.lorenzo0111'
+    version = rootProject.version
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+    }
+
+    ext {
+        libsBase = "me.lorenzo0111.bedwars.libs"
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+        maven { url 'https://repo.xenondevs.xyz/releases' }
+        maven { url 'https://repo.papermc.io/repository/maven-public/' }
+    }
+
+    dependencies {
+        compileOnly('org.jetbrains:annotations:24.1.0')
+    }
+
+    shadowJar {
+        relocate("org.bstats", "${libsBase}.bstats")
+        relocate("com.zaxxer.hikari", "${libsBase}.hikari")
+        relocate("xyz.xenondevs.invui", "${libsBase}.invui")
+        relocate("xyz.xenondevs.inventoryaccess", "${libsBase}.inventoryaccess")
+        relocate("com.cryptomorin.xseries", "${libsBase}.xseries")
+    }
+
+    processResources {
+        from(sourceSets.main.resources.srcDirs) {
+            duplicatesStrategy DuplicatesStrategy.INCLUDE
+            inputs.property 'version', version
+            filter ReplaceTokens, tokens: [version: version]
+        }
+    }
+
+    tasks.build.dependsOn tasks.shadowJar
+}
