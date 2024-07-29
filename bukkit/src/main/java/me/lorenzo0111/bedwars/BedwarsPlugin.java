@@ -1,5 +1,6 @@
 package me.lorenzo0111.bedwars;
 
+import me.lorenzo0111.bedwars.commands.BedwarsCommand;
 import me.lorenzo0111.bedwars.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
@@ -24,11 +25,11 @@ public final class BedwarsPlugin extends JavaPlugin {
         this.saveConfig();
 
 
-
         this.reload();
         this.firstRun = false;
 
         // ******** Commands ********
+        this.getCommand("bedwars").setExecutor(new BedwarsCommand(this));
 
 
         // ******** Listeners ********
