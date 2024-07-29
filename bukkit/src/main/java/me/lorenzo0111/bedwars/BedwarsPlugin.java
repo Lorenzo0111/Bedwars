@@ -1,7 +1,10 @@
 package me.lorenzo0111.bedwars;
 
+import lombok.Getter;
+import me.lorenzo0111.bedwars.api.BedwarsAPI;
 import me.lorenzo0111.bedwars.commands.BedwarsCommand;
 import me.lorenzo0111.bedwars.data.SQLHandler;
+import me.lorenzo0111.bedwars.game.GameManager;
 import me.lorenzo0111.bedwars.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
@@ -11,12 +14,15 @@ import java.io.File;
 import java.util.List;
 import java.util.logging.Level;
 
-public final class BedwarsPlugin extends JavaPlugin {
-    private static BedwarsPlugin instance;
+@Getter
+public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
+    @Getter private static BedwarsPlugin instance;
     private boolean firstRun = true;
     private SQLHandler database;
+    private GameManager gameManager;
 
     @Override
+    @SuppressWarnings("ConstantConditions")
     public void onEnable() {
         instance = this;
 
@@ -28,6 +34,7 @@ public final class BedwarsPlugin extends JavaPlugin {
         this.saveConfig();
 
         this.database = new SQLHandler(this);
+        this.gameManager = new GameManager(this);
 
         this.reload();
         this.firstRun = false;
@@ -47,6 +54,7 @@ public final class BedwarsPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         try {
+            this.gameManager.stop();
             this.database.close();
         } catch (Exception e) {
             this.getLogger().log(Level.SEVERE, "An error occurred while disabling the plugin", e);
@@ -84,7 +92,6 @@ public final class BedwarsPlugin extends JavaPlugin {
         );
     }
 
-
     public void reload() {
         this.reloadConfig();
         this.database.close();
@@ -101,8 +108,10 @@ public final class BedwarsPlugin extends JavaPlugin {
             try {
                 this.database.init();
                 this.log(" &cDatabase connection&7: &a&lSUCCESS");
+                this.gameManager.reload();
+                this.log(" &cGame manager&7: &a&lSUCCESS");
             } catch (Exception e) {
-                this.log(" &cAn error occurred while connecting to the database.");
+                this.log(" &cAn error occurred while loading the plugin.");
                 this.log(" &cPlease, check your configuration and try again.");
                 this.log(" &cIf the problem persists, contact the developer.");
                 this.log(" &cError: " + e.getMessage());
@@ -111,13 +120,5 @@ public final class BedwarsPlugin extends JavaPlugin {
         }
 
         this.log("&c&m---------------------------------------------------");
-    }
-
-    public static BedwarsPlugin getInstance() {
-        return instance;
-    }
-
-    public SQLHandler getDatabase() {
-        return database;
     }
 }
