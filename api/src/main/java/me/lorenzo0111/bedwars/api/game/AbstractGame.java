@@ -20,4 +20,5 @@ public abstract class AbstractGame {
     public abstract void start();
     public abstract void stop();
     public abstract boolean isLoading();
+    public abstract void join(Player player);
 }

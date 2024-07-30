@@ -25,6 +25,14 @@ public class TeamConfig implements ConfigurationSerializable {
         this.generator = (ConfigLocation) data.get("generator");
     }
 
+    public boolean isComplete() {
+        return this.spawn != null &&
+                this.bed != null &&
+                this.shop != null &&
+                this.upgrades != null &&
+                this.generator != null;
+    }
+
     @NotNull
     @Override
     public Map<String, Object> serialize() {

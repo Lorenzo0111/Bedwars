@@ -18,9 +18,10 @@ public class GameConfiguration implements ConfigurationSerializable {
     private final String id;
     private final Map<ChatColor, TeamConfig> teams = new HashMap<>();
     private final Map<Material, List<ConfigLocation>> generators = new HashMap<>();
-    private int arenas;
-    private int minPlayers;
-    private int playersPerTeam;
+    private ConfigLocation spectatorSpawn;
+    private int arenas = -1;
+    private int minPlayers = -1;
+    private int playersPerTeam = -1;
 
     public GameConfiguration(String id) {
         this.id = id;
@@ -44,6 +45,15 @@ public class GameConfiguration implements ConfigurationSerializable {
 
     public List<ConfigLocation> getGenerators(Material material) {
         return this.generators.computeIfAbsent(material, ignored -> new ArrayList<>());
+    }
+
+    public boolean isComplete() {
+        return this.arenas >= 0 &&
+                this.playersPerTeam >= 1 &&
+                this.minPlayers >= 1 &&
+                !this.teams.isEmpty() &&
+                this.teams.values().stream().allMatch(TeamConfig::isComplete) &&
+                this.spectatorSpawn != null;
     }
 
     @NotNull

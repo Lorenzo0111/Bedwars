@@ -7,11 +7,13 @@ import me.lorenzo0111.bedwars.api.game.AbstractGameManager;
 import me.lorenzo0111.bedwars.api.game.config.GameConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class GameManager implements AbstractGameManager {
     private final BedwarsPlugin plugin;
@@ -55,4 +57,23 @@ public class GameManager implements AbstractGameManager {
         this.games.forEach(AbstractGame::stop);
         this.games.clear();
     }
+
+    @Override
+    public @Nullable AbstractGame getGame(UUID id) {
+        return this.games.stream()
+                .filter(game -> game.getUuid().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
+    public @Nullable AbstractGame findGame() {
+        return this.games.stream()
+                .filter(game -> game.getState().canJoin())
+                .filter(game -> game.getPlayers().size() < game.getConfig().getPlayersPerTeam() * game.getConfig().getTeams().size())
+                .findFirst()
+                .orElse(null);
+    }
+
+
 }

@@ -4,10 +4,7 @@ import lombok.Getter;
 import me.lorenzo0111.bedwars.BedwarsPlugin;
 import me.lorenzo0111.bedwars.commands.exceptions.OnlyPlayersException;
 import me.lorenzo0111.bedwars.commands.exceptions.UsageException;
-import me.lorenzo0111.bedwars.commands.subcommands.HelpCommand;
-import me.lorenzo0111.bedwars.commands.subcommands.NotFoundCommand;
-import me.lorenzo0111.bedwars.commands.subcommands.ReloadCommand;
-import me.lorenzo0111.bedwars.commands.subcommands.SetupCommand;
+import me.lorenzo0111.bedwars.commands.subcommands.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -27,6 +24,7 @@ public class BedwarsCommand implements TabExecutor {
         register(new HelpCommand(this));
         register(new ReloadCommand(this));
         register(new SetupCommand(this));
+        register(new JoinCommand(this));
     }
 
     @Override

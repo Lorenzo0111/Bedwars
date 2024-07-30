@@ -155,7 +155,10 @@ messages:
   reload: "&7The plugin has been reloaded."
   world-not-found: "&cThe world you entered was not found."
   setup-started: "&7The setup has started."
+  game-not-found: "&cCannot find a game for you!"
   setup:
     set-arenas: "&7Please enter the &c&narena count&7."
     set-min-players: "&7Please enter the &c&nrequired players&7."
     set-team-players: "&7Please enter the &c&nplayers per team&7."
+    complete: "&7The setup has been completed."
+    incomplete: "&7The setup is incomplete. Please complete the setup."

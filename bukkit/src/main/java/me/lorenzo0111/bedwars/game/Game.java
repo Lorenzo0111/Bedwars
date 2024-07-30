@@ -49,4 +49,11 @@ public class Game extends AbstractGame {
     public boolean isLoading() {
         return world == null;
     }
+
+    @Override
+    public void join(Player player) {
+        players.add(player);
+
+        player.teleport(world.getSpawnLocation());
+    }
 }

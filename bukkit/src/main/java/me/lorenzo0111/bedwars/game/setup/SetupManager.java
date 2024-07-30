@@ -48,7 +48,16 @@ public class SetupManager {
     }
 
     public void endSetup(Player player) {
-        if (inSetup(player)) getSession(player).save();
+        if (inSetup(player)) {
+            SetupSession session = getSession(player);
+            if (!session.config().isComplete()) {
+                player.sendMessage(plugin.getPrefixed("setup.incomplete"));
+                return;
+            }
+
+            session.save();
+            player.sendMessage(plugin.getPrefixed("setup.complete"));
+        }
 
         sessions.remove(player);
     }
