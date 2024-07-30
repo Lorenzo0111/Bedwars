@@ -3,6 +3,7 @@ package me.lorenzo0111.bedwars.hooks.hologram.natives;
 import me.lorenzo0111.bedwars.api.hologram.HologramHook;
 import me.lorenzo0111.bedwars.api.hologram.WrappedHologram;
 import org.bukkit.Location;
+import org.bukkit.Material;
 
 import java.util.List;
 
@@ -14,8 +15,8 @@ public class NativeHologramHook extends HologramHook {
     }
 
     @Override
-    public WrappedHologram create(Location location, List<String> lines) {
-        NativeHologram hologram = new NativeHologram(location, lines);
+    public WrappedHologram create(Location location, List<String> lines, List<Material> materialLines) {
+        NativeHologram hologram = new NativeHologram(this, location, lines, materialLines);
         holograms.add(hologram);
         hologram.spawn();
 

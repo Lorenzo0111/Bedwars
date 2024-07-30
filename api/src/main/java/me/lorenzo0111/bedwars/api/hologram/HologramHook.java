@@ -1,6 +1,7 @@
 package me.lorenzo0111.bedwars.api.hologram;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,5 +16,9 @@ public abstract class HologramHook {
         holograms.clear();
     }
 
-    public abstract WrappedHologram create(Location location, List<String> lines);
+    public abstract WrappedHologram create(Location location, List<String> lines, List<Material> materialLines);
+
+    public void remove(WrappedHologram hologram) {
+        holograms.remove(hologram);
+    }
 }

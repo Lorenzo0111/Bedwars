@@ -30,5 +30,10 @@ titles:
     subtitle: "&7until the game starts."
 
 generators:
-  diamonds:
-    - ""
+  diamond:
+    - "&a&lDiamonds"
+    - "&7Diamonds will spawn in %time% seconds."
+
+  emerald:
+    - "&e&lEmeralds"
+    - "&7Emeralds will spawn in %time% seconds."

@@ -7,11 +7,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
-public class GeneratorTask extends BukkitRunnable {
+public class GeneratorDropTask extends BukkitRunnable {
     private final Material material;
     private final Location location;
 
-    public GeneratorTask(@NotNull Material material, @NotNull Location location) {
+    public GeneratorDropTask(@NotNull Material material, @NotNull Location location) {
         this.material = material;
         this.location = location;
 

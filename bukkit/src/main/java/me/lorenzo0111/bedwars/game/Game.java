@@ -5,9 +5,12 @@ import me.lorenzo0111.bedwars.api.game.AbstractGame;
 import me.lorenzo0111.bedwars.api.game.GameState;
 import me.lorenzo0111.bedwars.api.game.config.GameConfiguration;
 import me.lorenzo0111.bedwars.api.game.config.TeamConfig;
+import me.lorenzo0111.bedwars.api.hologram.WrappedHologram;
 import me.lorenzo0111.bedwars.hooks.WorldsHook;
-import me.lorenzo0111.bedwars.tasks.Countdown;
-import me.lorenzo0111.bedwars.tasks.GeneratorTask;
+import me.lorenzo0111.bedwars.hooks.hologram.HologramHookWrapper;
+import me.lorenzo0111.bedwars.tasks.CountdownTask;
+import me.lorenzo0111.bedwars.tasks.GeneratorDropTask;
+import me.lorenzo0111.bedwars.tasks.GeneratorTitleTask;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -20,8 +23,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Game extends AbstractGame {
-    private final List<GeneratorTask> generatorTasks = new ArrayList<>();
-    private Countdown countdown = null;
+    private final List<GeneratorDropTask> generatorTasks = new ArrayList<>();
+    private final List<WrappedHologram> generatorHolograms = new ArrayList<>();
+    private CountdownTask countdown = null;
 
     public Game(GameConfiguration config) {
         super(config);
@@ -37,13 +41,13 @@ public class Game extends AbstractGame {
 
         this.setState(GameState.STARTING);
 
-        this.countdown = new Countdown(5, seconds -> players.forEach(player -> player.sendTitle(
+        this.countdown = new CountdownTask(5, seconds -> players.forEach(player -> player.sendTitle(
                 plugin.getMessage("titles.start-countdown.title")
                         .replace("%seconds%", String.valueOf(seconds)),
                 plugin.getMessage("titles.start-countdown.subtitle")
                         .replace("%seconds%", String.valueOf(seconds)),
                 0, 20, 0
-        )), this::start).start();
+        )), this::start);
     }
 
     @Override
@@ -73,19 +77,35 @@ public class Game extends AbstractGame {
         players.forEach(player -> player.setGameMode(GameMode.SURVIVAL));
 
         config.getGenerators().forEach((material, locations) ->
-                locations.forEach(location ->
-                        generatorTasks.add(new GeneratorTask(
-                                material,
-                                location.toLocation(world))
-                        )));
+                locations.forEach(location -> {
+                    generatorTasks.add(new GeneratorDropTask(
+                            material,
+                            location.toLocation(world))
+                    );
+
+                    List<String> lines = BedwarsPlugin.getInstance().getMessages("generators." + material.name().toLowerCase());
+                    if (lines.isEmpty()) return;
+
+                    generatorHolograms.add(HologramHookWrapper.getHook().create(
+                            location.toLocation(world),
+                            lines,
+                            List.of(material)
+                    ));
+                }));
 
         setState(GameState.PLAYING);
+
+        new GeneratorTitleTask(this);
     }
 
     @Override
     public void stop() {
-        generatorTasks.forEach(GeneratorTask::cancel);
+        generatorHolograms.forEach(WrappedHologram::remove);
+        generatorHolograms.clear();
+
+        generatorTasks.forEach(GeneratorDropTask::cancel);
         generatorTasks.clear();
+
         players.forEach(player -> player.getInventory().clear());
         players.clear();
 
