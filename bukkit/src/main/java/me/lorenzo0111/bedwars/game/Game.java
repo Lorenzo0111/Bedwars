@@ -11,8 +11,8 @@ import me.lorenzo0111.bedwars.tasks.GeneratorTask;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.ArrayList;
@@ -21,7 +21,6 @@ import java.util.Map;
 
 public class Game extends AbstractGame {
     private final List<GeneratorTask> generatorTasks = new ArrayList<>();
-    private World world;
     private Countdown countdown = null;
 
     public Game(GameConfiguration config) {
@@ -113,9 +112,26 @@ public class Game extends AbstractGame {
     }
 
     @Override
+    @SuppressWarnings("UnstableApiUsage")
     public void onDeath(PlayerDeathEvent event) {
         ChatColor team = this.getTeam(event.getEntity());
         if (team == null) return;
+
+        if (event.getDamageSource().getCausingEntity() instanceof Player killer) {
+            ChatColor killerColor = this.getTeam(killer);
+
+            this.broadcast(BedwarsPlugin.getInstance()
+                    .getPrefixed("kill")
+                    .replace("%killer_color%", killerColor != null ? killerColor.toString() : ChatColor.GRAY.toString())
+                    .replace("%killer%", killer.getName())
+                    .replace("%player_color%", team.toString())
+                    .replace("%player%", event.getEntity().getName()));
+        } else {
+            this.broadcast(BedwarsPlugin.getInstance()
+                    .getPrefixed("death")
+                    .replace("%player_color%", team.toString())
+                    .replace("%player%", event.getEntity().getName()));
+        }
 
         event.setDroppedExp(0);
         event.getDrops().clear();
@@ -130,10 +146,42 @@ public class Game extends AbstractGame {
             event.getEntity().setGameMode(GameMode.SPECTATOR);
             event.getEntity().teleport(config.getSpectatorSpawn().toLocation(world));
 
-            // TODO: Handle team elimination
+            this.broadcast(BedwarsPlugin.getInstance()
+                    .getPrefixed("team-elimination")
+                    .replace("%team%", team.name())
+                    .replace("%color%", team.toString()));
             return;
         }
 
         event.getEntity().teleport(teamConfig.getSpawn().toLocation(world));
+    }
+
+    @Override
+    public void onBedBreak(BlockBreakEvent event) {
+        ChatColor team = this.getTeam(event.getPlayer());
+        if (team == null) return;
+
+        TeamConfig teamConfig = config.getTeam(team);
+        if (teamConfig.getBed().toLocation(world).equals(event.getBlock().getLocation())) {
+            event.setCancelled(true);
+            return;
+        }
+
+        event.setDropItems(false);
+
+        config.getTeams().entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().getBed().toLocation(world).equals(event.getBlock().getLocation()))
+                .findFirst()
+                .ifPresent(entry -> this.broadcast(BedwarsPlugin.getInstance()
+                        .getPrefixed("bed-destroyed")
+                        .replace("%team%", entry.getKey().name())
+                        .replace("%color%", entry.getKey().toString())
+                        .replace("%player%", event.getPlayer().getName())
+                        .replace("%player_color%", team.toString())));
+    }
+
+    private void broadcast(String message) {
+        players.forEach(player -> player.sendMessage(message));
     }
 }

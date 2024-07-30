@@ -5,6 +5,7 @@ import me.lorenzo0111.bedwars.BedwarsPlugin;
 import me.lorenzo0111.bedwars.api.game.AbstractGame;
 import me.lorenzo0111.bedwars.api.game.AbstractGameManager;
 import me.lorenzo0111.bedwars.api.game.config.GameConfiguration;
+import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -80,6 +81,14 @@ public class GameManager implements AbstractGameManager {
     public @Nullable AbstractGame getGame(Player player) {
         return this.games.stream()
                 .filter(game -> game.getPlayers().contains(player))
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
+    public @Nullable AbstractGame getGame(World world) {
+        return this.games.stream()
+                .filter(game -> game.getWorld().equals(world))
                 .findFirst()
                 .orElse(null);
     }

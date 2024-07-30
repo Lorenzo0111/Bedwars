@@ -1,0 +1,30 @@
+prefix: "&c&lBed&f&lWars &f&l» &7"
+not-found: "&cThe command you entered was not found."
+only-players: "&cOnly players can use this command."
+no-permission: "&cYou do not have permission to use this command."
+invalid-usage: "&7Invalid usage. Please use &c&n%usage%&7."
+invalid-number: "&cThe number you entered is invalid."
+error: "&cAn error occurred while executing this command. Error: %error%"
+reload: "&7The plugin has been reloaded."
+world-not-found: "&cThe world you entered was not found."
+setup-started: "&7The setup has started."
+game-not-found: "&cCannot find a game for you!"
+game-full: "&cThe game is full."
+kill: "%killer_color%%killer% &7killed by %player_color%%player%&7."
+death: "%player_color%%player% &7died."
+team-elimination: "&7Team %color%%team% &7has been eliminated."
+bed-destroyed: "&7Team %color%%team% &7bed has been destroyed by %player_color%%player%&7."
+
+setup:
+  arenas: "&7Please enter the &c&narena count&7."
+  min-players: "&7Please enter the &c&nrequired players&7."
+  team-players: "&7Please enter the &c&nplayers per team&7."
+  complete: "&7The setup has been completed."
+  incomplete: "&7The setup is incomplete. Please complete the setup."
+  generator-added: "&7The generator has been added."
+  location: "&7The location has been saved."
+
+titles:
+  start-countdown:
+    title: "&c%time%"
+    subtitle: "&7until the game starts."

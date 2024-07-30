@@ -1,4 +1,4 @@
-package me.lorenzo0111.bedwars.utils;
+package me.lorenzo0111.bedwars.tasks;
 
 import me.lorenzo0111.bedwars.BedwarsPlugin;
 import org.bukkit.Bukkit;

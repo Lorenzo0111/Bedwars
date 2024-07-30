@@ -14,10 +14,11 @@ import me.lorenzo0111.bedwars.game.setup.SetupManager;
 import me.lorenzo0111.bedwars.game.assign.RandomTeamAssigner;
 import me.lorenzo0111.bedwars.hooks.WorldsHook;
 import me.lorenzo0111.bedwars.listeners.GameListener;
-import me.lorenzo0111.bedwars.utils.BukkitScheduler;
+import me.lorenzo0111.bedwars.tasks.BukkitScheduler;
 import me.lorenzo0111.bedwars.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,6 +30,7 @@ import java.util.logging.Level;
 public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
     @Getter private static BedwarsPlugin instance;
     private boolean firstRun = true;
+    private YamlConfiguration messages;
     private BukkitScheduler scheduler;
     private SQLHandler database;
     private GameManager gameManager;
@@ -53,6 +55,10 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
         this.saveDefaultConfig();
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
+
+        if (!new File(this.getDataFolder(), "messages.yml").exists()) {
+            this.saveResource("messages.yml", false);
+        }
 
         WorldsHook.init();
 
@@ -91,16 +97,20 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
         logger.sendMessage(StringUtils.color(getMessage("prefix") + message));
     }
 
-    public String getMessage(String path, boolean messagesSection) {
-        return StringUtils.color(
-                this.getConfig().getString(messagesSection ? "messages." + path : path, "&cUnable to find the following key: &7" + path + "&c.")
-        );
+    public String getMessage(String path, boolean messagesFile) {
+        String message = messagesFile ?
+                this.messages.getString(path, "&cUnable to find the following key: &7" + path + "&c.") :
+                this.getConfig().getString(path, "&cUnable to find the following key: &7" + path + "&c.");
+
+        return StringUtils.color(message);
     }
 
-    public List<String> getMessages(String path, boolean messagesSection) {
-        return StringUtils.color(
-                this.getConfig().getStringList(messagesSection ? "messages." + path : path)
-        );
+    public List<String> getMessages(String path, boolean messagesFile) {
+        List<String> messages = messagesFile ?
+                this.messages.getStringList(path) :
+                this.getConfig().getStringList(path);
+
+        return StringUtils.color(messages);
     }
 
     public String getMessage(String path) {
@@ -112,13 +122,12 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
     }
 
     public String getPrefixed(String path) {
-        return getMessage("prefix") + StringUtils.color(
-                this.getConfig().getString("messages." + path, "&cUnable to find the following key: &7" + path + "&c.")
-        );
+        return getMessage("prefix") + getMessage(path);
     }
 
     public void reload() {
         this.reloadConfig();
+        this.messages = YamlConfiguration.loadConfiguration(new File(this.getDataFolder(), "messages.yml"));
         this.database.close();
         this.log("&c&m---------------------------------------------------");
         this.log("             &c&lBed&f&lWars &7v" + this.getDescription().getVersion());
