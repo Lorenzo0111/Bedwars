@@ -3,6 +3,10 @@ version: @version@
 main: me.lorenzo0111.bedwars.BedwarsPlugin
 api-version: '1.13'
 authors: [ Lorenzo0111 ]
+depend:
+  - SlimeWorldManager
+softdepend:
+  - DecentHolograms
 commands:
   bedwars:
     aliases:

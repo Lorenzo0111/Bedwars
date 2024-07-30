@@ -1,6 +1,6 @@
 package me.lorenzo0111.bedwars.hooks.hologram.natives;
 
-import me.lorenzo0111.bedwars.hooks.hologram.WrappedHologram;
+import me.lorenzo0111.bedwars.api.hologram.WrappedHologram;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 

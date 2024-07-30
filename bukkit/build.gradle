@@ -3,6 +3,7 @@ dependencies {
     implementation('org.bstats:bstats-bukkit:3.0.2')
     implementation('xyz.xenondevs.invui:invui:1.33')
     implementation('com.zaxxer:HikariCP:5.1.0')
+    compileOnly('com.github.decentsoftware-eu:decentholograms:2.8.9')
 }
 
 shadowJar {

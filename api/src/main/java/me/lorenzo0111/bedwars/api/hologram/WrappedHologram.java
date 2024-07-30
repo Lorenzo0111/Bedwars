@@ -1,12 +1,14 @@
-package me.lorenzo0111.bedwars.hooks.hologram;
+package me.lorenzo0111.bedwars.api.hologram;
 
 import lombok.Data;
 import org.bukkit.Location;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 public abstract class WrappedHologram {
+    protected final UUID uuid = UUID.randomUUID();
     protected final Location location;
     protected final List<String> lines;
 
