@@ -26,6 +26,24 @@ menus:
       lore:
         - "&7Click to &c&nset&7 the &c&nplayers per team&7."
 
+    setup-teams:
+      type: "DIAMOND"
+      name: "&7Setup Teams"
+      lore:
+        - "&7Click to &c&nsetup&7 the &cteams&7."
+
+    save:
+      type: "EMERALD"
+      name: "&aSave"
+      lore:
+        - "&7Click to &asave &7the &asettings&7."
+
+    setup-team-color:
+      type: "WOOL"
+      name: "%color_display%%color% &7Team"
+      lore:
+        - "&7Click to &c&nedit&7 the &cteam&7."
+
     previous:
       type: "ARROW"
       name: "&cPrevious page"
@@ -53,6 +71,24 @@ menus:
     structure:
       - "# # # # # # # # #"
       - "# . A . M . T . #"
+      - "# . . . . . . . #"
+      - "# . . . S . . . #"
+      - "# # # # # # # # #"
+
+  setup-teams:
+    title: "&7Select Team"
+    structure:
+      - "# # # # # # # # #"
+      - "# . . . . . . . #"
+      - "# . . . . . . . #"
+      - "# . . . . . . . #"
+      - "# # # # # # # # #"
+
+  setup-team:
+    title: "&7Team Setup"
+    structure:
+      - "# # # # # # # # #"
+      - "# . . . . . . . #"
       - "# . . . . . . . #"
       - "# . . . . . . . #"
       - "# # # # # # # # #"

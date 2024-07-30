@@ -1,7 +1,10 @@
-package me.lorenzo0111.bedwars.gui.menus;
+package me.lorenzo0111.bedwars.gui.menus.setup;
 
 import me.lorenzo0111.bedwars.game.setup.SetupSession;
+import me.lorenzo0111.bedwars.gui.items.SimpleItem;
 import me.lorenzo0111.bedwars.gui.items.setup.IntegerEditItem;
+import me.lorenzo0111.bedwars.gui.items.setup.SaveItem;
+import me.lorenzo0111.bedwars.gui.menus.BaseMenu;
 
 public class SetupMenu extends BaseMenu {
 
@@ -29,6 +32,8 @@ public class SetupMenu extends BaseMenu {
 
             session.config().setPlayersPerTeam(value);
         }));
+        this.setItem('E', new SimpleItem("setup-teams", player -> new TeamsSetupMenu(session).open(player)));
+        this.setItem('S', new SaveItem());
     }
 
 }

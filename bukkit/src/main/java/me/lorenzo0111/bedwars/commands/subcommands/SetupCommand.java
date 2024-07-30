@@ -3,7 +3,7 @@ package me.lorenzo0111.bedwars.commands.subcommands;
 import me.lorenzo0111.bedwars.commands.BedwarsCommand;
 import me.lorenzo0111.bedwars.commands.SubCommand;
 import me.lorenzo0111.bedwars.commands.exceptions.OnlyPlayersException;
-import me.lorenzo0111.bedwars.gui.menus.SetupMenu;
+import me.lorenzo0111.bedwars.gui.menus.setup.SetupMenu;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
