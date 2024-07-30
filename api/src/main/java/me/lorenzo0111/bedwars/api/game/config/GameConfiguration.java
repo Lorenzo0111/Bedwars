@@ -2,18 +2,22 @@ package me.lorenzo0111.bedwars.api.game.config;
 
 import lombok.Data;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Data
 public class GameConfiguration implements ConfigurationSerializable {
     private final String id;
     private final Map<ChatColor, TeamConfig> teams = new HashMap<>();
+    private final Map<Material, List<ConfigLocation>> generators = new HashMap<>();
     private int arenas;
     private int minPlayers;
     private int playersPerTeam;
@@ -32,6 +36,14 @@ public class GameConfiguration implements ConfigurationSerializable {
         Map<String, Object> teams = (Map<String, Object>) data.get("teams");
         teams.forEach((color, config) -> this.teams.put(ChatColor.valueOf(color),
                 new TeamConfig((Map<String, Object>) config)));
+    }
+
+    public TeamConfig getTeam(ChatColor color) {
+        return this.teams.computeIfAbsent(color, ignored -> new TeamConfig());
+    }
+
+    public List<ConfigLocation> getGenerators(Material material) {
+        return this.generators.computeIfAbsent(material, ignored -> new ArrayList<>());
     }
 
     @NotNull

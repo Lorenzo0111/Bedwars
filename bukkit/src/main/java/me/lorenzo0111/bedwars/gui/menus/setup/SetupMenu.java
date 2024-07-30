@@ -33,6 +33,7 @@ public class SetupMenu extends BaseMenu {
             session.config().setPlayersPerTeam(value);
         }));
         this.setItem('E', new SimpleItem("setup-teams", player -> new TeamsSetupMenu(session).open(player)));
+        this.setItem('G', new SimpleItem("setup-generators", player -> new GeneratorsSetupMenu(session).open(player)));
         this.setItem('S', new SaveItem());
     }
 

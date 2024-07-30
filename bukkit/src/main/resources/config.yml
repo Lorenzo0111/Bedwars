@@ -44,6 +44,48 @@ menus:
       lore:
         - "&7Click to &c&nedit&7 the &cteam&7."
 
+    setup-team-spawn:
+      type: "GOLD_BLOCK"
+      name: "&7Set Spawn"
+      lore:
+        - "&7Click to &c&nset&7 the &cspawn location&7."
+
+    setup-team-bed:
+      type: "BED"
+      name: "&7Set Bed"
+      lore:
+        - "&7Click to &c&nset&7 the &cbed location&7."
+
+    setup-team-shop:
+      type: "CHEST"
+      name: "&7Set Shop"
+      lore:
+        - "&7Click to &c&nset&7 the &cshop location&7."
+
+    setup-team-upgrades:
+      type: "ANVIL"
+      name: "&7Set Upgrades"
+      lore:
+        - "&7Click to &c&nset&7 the &cupgrades location&7."
+
+    setup-team-generator:
+      type: "FURNACE"
+      name: "&7Set Generator"
+      lore:
+        - "&7Click to &c&nset&7 the &cgenerator location&7."
+
+    setup-generator:
+      type: "FURNACE"
+      name: "&7Set Generator"
+      lore:
+        - "&7Click to &c&nset&7 a &cgenerator location&7."
+
+    setup-generators:
+      type: "FURNACE"
+      name: "&7Edit Generators"
+      lore:
+        - "&7Click to &c&nedit&7 the &cgenerators&7."
+
     previous:
       type: "ARROW"
       name: "&cPrevious page"
@@ -71,7 +113,7 @@ menus:
     structure:
       - "# # # # # # # # #"
       - "# . A . M . T . #"
-      - "# . . . . . . . #"
+      - "# . . G . E . . #"
       - "# . . . S . . . #"
       - "# # # # # # # # #"
 
@@ -86,6 +128,15 @@ menus:
 
   setup-team:
     title: "&7Team Setup"
+    structure:
+      - "# # # # # # # # #"
+      - "# . S . B . s . #"
+      - "# . . U . G . . #"
+      - "# . . . F . . . #"
+      - "# # # # # # # # #"
+
+  setup-generators:
+    title: "&7Edit Generators"
     structure:
       - "# # # # # # # # #"
       - "# . . . . . . . #"

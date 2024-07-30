@@ -8,12 +8,12 @@ import org.bukkit.ChatColor;
 public class TeamsSetupMenu extends BaseMenu {
 
     public TeamsSetupMenu(SetupSession session) {
-        super("setup-team", false);
+        super("setup-team", true);
 
         for (ChatColor color : ChatColor.values()) {
            if (!color.isColor()) continue;
 
-           this.addItem(new TeamColorItem("setup-team-color", session, color));
+           this.addItem(new TeamColorItem(session, color));
         }
     }
 

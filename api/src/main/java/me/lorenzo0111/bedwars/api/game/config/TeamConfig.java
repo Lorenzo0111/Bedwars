@@ -1,12 +1,14 @@
 package me.lorenzo0111.bedwars.api.game.config;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
 @Data
+@NoArgsConstructor
 public class TeamConfig implements ConfigurationSerializable {
     private ConfigLocation spawn;
     private ConfigLocation bed;
