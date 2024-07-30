@@ -69,7 +69,7 @@ public class GameManager implements AbstractGameManager {
     @Override
     public @Nullable AbstractGame findGame() {
         return this.games.stream()
-                .filter(game -> game.getState().canJoin())
+                .filter(AbstractGame::canJoin)
                 .filter(game -> game.getPlayers().size() < game.getConfig().getPlayersPerTeam() * game.getConfig().getTeams().size())
                 .findFirst()
                 .orElse(null);

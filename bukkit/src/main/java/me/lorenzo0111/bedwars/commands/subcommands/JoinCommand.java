@@ -25,6 +25,10 @@ public class JoinCommand extends SubCommand {
         if (args.length > 0) {
             try {
                 game = plugin.getGameManager().getGame(UUID.fromString(args[0]));
+
+                if (game != null && !game.canJoin()) {
+                    sender.sendMessage(plugin.getPrefixed("game-full"));
+                }
             } catch (IllegalArgumentException ignored) {}
         }
 

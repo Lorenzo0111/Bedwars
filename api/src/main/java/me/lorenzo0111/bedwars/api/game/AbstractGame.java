@@ -17,8 +17,14 @@ public abstract class AbstractGame {
     protected final Map<ChatColor, List<Player>> teams = new HashMap<>();
     protected GameState state = GameState.WAITING;
 
+    public abstract void startCountdown();
+    public abstract void abortCountdown();
     public abstract void start();
     public abstract void stop();
     public abstract boolean isLoading();
     public abstract void join(Player player);
+
+    public boolean canJoin() {
+        return this.state.canJoin() && this.players.size() < this.config.getPlayersPerTeam() * this.config.getTeams().size();
+    }
 }
