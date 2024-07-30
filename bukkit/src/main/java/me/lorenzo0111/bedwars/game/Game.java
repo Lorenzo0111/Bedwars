@@ -10,7 +10,6 @@ import me.lorenzo0111.bedwars.hooks.WorldsHook;
 import me.lorenzo0111.bedwars.hooks.hologram.HologramHookWrapper;
 import me.lorenzo0111.bedwars.tasks.CountdownTask;
 import me.lorenzo0111.bedwars.tasks.GeneratorDropTask;
-import me.lorenzo0111.bedwars.tasks.GeneratorTitleTask;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -94,8 +93,6 @@ public class Game extends AbstractGame {
                 }));
 
         setState(GameState.PLAYING);
-
-        new GeneratorTitleTask(this);
     }
 
     @Override
@@ -132,6 +129,16 @@ public class Game extends AbstractGame {
     }
 
     @Override
+    public void onWin(ChatColor winner) {
+        this.broadcast(BedwarsPlugin.getInstance()
+                .getPrefixed("win")
+                .replace("%team%", winner.name())
+                .replace("%color%", winner.toString()));
+
+        this.stop();
+    }
+
+    @Override
     @SuppressWarnings("UnstableApiUsage")
     public void onDeath(PlayerDeathEvent event) {
         ChatColor team = this.getTeam(event.getEntity());
@@ -157,23 +164,39 @@ public class Game extends AbstractGame {
         event.getDrops().clear();
 
         Bukkit.getScheduler().runTaskLater(BedwarsPlugin.getInstance(), () -> event.getEntity().spigot().respawn(), 1L);
+        event.getEntity().setGameMode(GameMode.SPECTATOR);
+        event.getEntity().teleport(config.getSpectatorSpawn().toLocation(world));
 
         TeamConfig teamConfig = config.getTeam(team);
         if (teamConfig.getBed().toLocation(world).getBlock().getType().isAir()) {
             players.remove(event.getEntity());
             teams.get(team).remove(event.getEntity());
 
-            event.getEntity().setGameMode(GameMode.SPECTATOR);
-            event.getEntity().teleport(config.getSpectatorSpawn().toLocation(world));
+            if (teams.get(team).isEmpty()) {
+                this.broadcast(BedwarsPlugin.getInstance()
+                        .getPrefixed("team-elimination")
+                        .replace("%team%", team.name())
+                        .replace("%color%", team.toString()));
 
-            this.broadcast(BedwarsPlugin.getInstance()
-                    .getPrefixed("team-elimination")
-                    .replace("%team%", team.name())
-                    .replace("%color%", team.toString()));
+                teams.entrySet()
+                        .stream()
+                        .filter(entry -> !entry.getValue().isEmpty())
+                        .findFirst()
+                        .ifPresent(winner -> this.onWin(winner.getKey()));
+            }
             return;
         }
 
-        event.getEntity().teleport(teamConfig.getSpawn().toLocation(world));
+        new CountdownTask(5, seconds -> event.getEntity().sendTitle(
+                BedwarsPlugin.getInstance().getMessage("titles.respawn.title")
+                        .replace("%time%", String.valueOf(seconds)),
+                BedwarsPlugin.getInstance().getMessage("titles.respawn.subtitle")
+                        .replace("%time%", String.valueOf(seconds)),
+                0, 20, 0
+        ), () -> {
+            event.getEntity().teleport(teamConfig.getSpawn().toLocation(world));
+            event.getEntity().setGameMode(GameMode.SURVIVAL);
+        });
     }
 
     @Override

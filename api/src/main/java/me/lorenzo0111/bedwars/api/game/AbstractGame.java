@@ -28,6 +28,7 @@ public abstract class AbstractGame {
     public abstract boolean isLoading();
     public abstract void join(Player player);
 
+    public abstract void onWin(ChatColor winner);
     public abstract void onDeath(PlayerDeathEvent event);
     public abstract void onBedBreak(BlockBreakEvent event);
 
@@ -40,6 +41,12 @@ public abstract class AbstractGame {
     }
 
     public boolean canJoin() {
-        return this.state.canJoin() && this.players.size() < this.config.getPlayersPerTeam() * this.config.getTeams().size();
+        return !isLoading() &&
+                this.state.canJoin() &&
+                this.players.size() < this.getMaxPlayers();
+    }
+
+    public int getMaxPlayers() {
+        return this.config.getPlayersPerTeam() * this.config.getTeams().size();
     }
 }

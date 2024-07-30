@@ -25,6 +25,7 @@ public class BedwarsCommand implements TabExecutor {
         register(new ReloadCommand(this));
         register(new SetupCommand(this));
         register(new JoinCommand(this));
+        register(new ListCommand(this));
     }
 
     @Override

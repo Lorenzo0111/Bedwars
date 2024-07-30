@@ -14,6 +14,7 @@ kill: "%killer_color%%killer% &7killed by %player_color%%player%&7."
 death: "%player_color%%player% &7died."
 team-elimination: "&7Team %color%%team% &7has been eliminated."
 bed-destroyed: "&7Team %color%%team% &7bed has been destroyed by %player_color%%player%&7."
+win: "&7Team %color%%team% &7has won the game."
 
 setup:
   arenas: "&7Please enter the &c&narena count&7."
@@ -28,12 +29,15 @@ titles:
   start-countdown:
     title: "&c%time%"
     subtitle: "&7until the game starts."
+  respawn:
+    title: "&cRespawning..."
+    subtitle: "&7You will respawn in %time% seconds."
 
 generators:
   diamond:
     - "&a&lDiamonds"
-    - "&7Diamonds will spawn in %time% seconds."
+    - "&7Diamonds will spawn here."
 
   emerald:
     - "&e&lEmeralds"
-    - "&7Emeralds will spawn in %time% seconds."
+    - "&7Emeralds will spawn here."
