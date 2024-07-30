@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-public class WorldsHook {
+public final class WorldsHook {
     private static BedwarsPlugin plugin;
     private static SlimePlugin hook;
     private static SlimeLoader loader;

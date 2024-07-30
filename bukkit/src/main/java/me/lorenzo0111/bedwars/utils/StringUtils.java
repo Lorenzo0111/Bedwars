@@ -28,4 +28,8 @@ public final class StringUtils {
                 .collect(Collectors.toList());
     }
 
+    public static String capitalize(String string) {
+        return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
+    }
+
 }

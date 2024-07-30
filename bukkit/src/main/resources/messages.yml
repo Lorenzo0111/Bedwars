@@ -28,3 +28,7 @@ titles:
   start-countdown:
     title: "&c%time%"
     subtitle: "&7until the game starts."
+
+generators:
+  diamonds:
+    - ""

@@ -12,6 +12,7 @@ import me.lorenzo0111.bedwars.data.SQLHandler;
 import me.lorenzo0111.bedwars.game.GameManager;
 import me.lorenzo0111.bedwars.game.setup.SetupManager;
 import me.lorenzo0111.bedwars.game.assign.RandomTeamAssigner;
+import me.lorenzo0111.bedwars.hooks.HologramHookWrapper;
 import me.lorenzo0111.bedwars.hooks.WorldsHook;
 import me.lorenzo0111.bedwars.listeners.GameListener;
 import me.lorenzo0111.bedwars.tasks.BukkitScheduler;
@@ -60,8 +61,6 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
             this.saveResource("messages.yml", false);
         }
 
-        WorldsHook.init();
-
         this.scheduler = new BukkitScheduler(this);
         this.database = new SQLHandler(this);
         this.teamAssigner = new RandomTeamAssigner();
@@ -85,6 +84,8 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
     @Override
     public void onDisable() {
         try {
+            HologramHookWrapper.unload();
+
             this.gameManager.stop();
             this.database.close();
         } catch (Exception e) {
@@ -128,6 +129,10 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
     public void reload() {
         this.reloadConfig();
         this.messages = YamlConfiguration.loadConfiguration(new File(this.getDataFolder(), "messages.yml"));
+
+        WorldsHook.init();
+        HologramHookWrapper.init();
+
         this.database.close();
         this.log("&c&m---------------------------------------------------");
         this.log("             &c&lBed&f&lWars &7v" + this.getDescription().getVersion());
