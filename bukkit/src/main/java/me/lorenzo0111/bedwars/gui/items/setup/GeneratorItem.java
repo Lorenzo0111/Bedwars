@@ -15,7 +15,7 @@ public class GeneratorItem extends ConfiguredItem {
     private final Material material;
 
     public GeneratorItem(SetupSession session, Material material) {
-        super("setup-generator");
+        super("setup.generator");
         this.session = session;
         this.material = material;
     }

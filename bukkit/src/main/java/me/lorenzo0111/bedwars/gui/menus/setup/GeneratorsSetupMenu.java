@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class GeneratorsSetupMenu extends BaseMenu {
 
     public GeneratorsSetupMenu(SetupSession session) {
-        super("setup-generators", true);
+        super("setup.generators", true);
 
         for (Material material : Arrays.asList(Material.IRON_INGOT, Material.GOLD_INGOT, Material.DIAMOND, Material.EMERALD)) {
            this.addItem(new GeneratorItem(session, material));

@@ -8,83 +8,90 @@ mysql:
 
 menus:
   items:
-    set-arenas:
-      type: "DIAMOND_SWORD"
-      name: "&7Set Arenas"
-      lore:
-        - "&7Click to &c&nset&7 the &c&narena count&7."
+    setup:
+      arenas:
+        type: "DIAMOND_SWORD"
+        name: "&7Set Arenas"
+        lore:
+          - "&7Click to &c&nset&7 the &c&narena count&7."
 
-    set-min-players:
-      type: "ENDER_PEARL"
-      name: "&7Set Min Players"
-      lore:
-        - "&7Click to &c&nset&7 the &c&nrequired players&7."
+      min-players:
+        type: "ENDER_PEARL"
+        name: "&7Set Min Players"
+        lore:
+          - "&7Click to &c&nset&7 the &c&nrequired players&7."
 
-    set-team-players:
-      type: "MAGMA_CREAM"
-      name: "&7Set Team Players"
-      lore:
-        - "&7Click to &c&nset&7 the &c&nplayers per team&7."
+      team-players:
+        type: "MAGMA_CREAM"
+        name: "&7Set Team Players"
+        lore:
+          - "&7Click to &c&nset&7 the &c&nplayers per team&7."
 
-    setup-teams:
-      type: "DIAMOND"
-      name: "&7Setup Teams"
-      lore:
-        - "&7Click to &c&nsetup&7 the &cteams&7."
+      teams:
+        type: "DIAMOND"
+        name: "&7Setup Teams"
+        lore:
+          - "&7Click to &c&nsetup&7 the &cteams&7."
 
-    save:
-      type: "EMERALD"
-      name: "&aSave"
-      lore:
-        - "&7Click to &asave &7the &asettings&7."
+      spectators:
+        type: "ENDER_EYE"
+        name: "&7Setup Spectators"
+        lore:
+          - "&7Click to &c&nsetup&7 the &cspectators location&7."
 
-    setup-team-color:
-      type: "WOOL"
-      name: "%color_display%%color% &7Team"
-      lore:
-        - "&7Click to &c&nedit&7 the &cteam&7."
+      save:
+        type: "EMERALD"
+        name: "&aSave"
+        lore:
+          - "&7Click to &asave &7the &asettings&7."
 
-    setup-team-spawn:
-      type: "GOLD_BLOCK"
-      name: "&7Set Spawn"
-      lore:
-        - "&7Click to &c&nset&7 the &cspawn location&7."
+      team-color:
+        type: "WOOL"
+        name: "%color_display%%color% &7Team"
+        lore:
+          - "&7Click to &c&nedit&7 the &cteam&7."
 
-    setup-team-bed:
-      type: "BED"
-      name: "&7Set Bed"
-      lore:
-        - "&7Click to &c&nset&7 the &cbed location&7."
+      team-spawn:
+        type: "GOLD_BLOCK"
+        name: "&7Set Spawn"
+        lore:
+          - "&7Click to &c&nset&7 the &cspawn location&7."
 
-    setup-team-shop:
-      type: "CHEST"
-      name: "&7Set Shop"
-      lore:
-        - "&7Click to &c&nset&7 the &cshop location&7."
+      team-bed:
+        type: "BED"
+        name: "&7Set Bed"
+        lore:
+          - "&7Click to &c&nset&7 the &cbed location&7."
 
-    setup-team-upgrades:
-      type: "ANVIL"
-      name: "&7Set Upgrades"
-      lore:
-        - "&7Click to &c&nset&7 the &cupgrades location&7."
+      team-shop:
+        type: "CHEST"
+        name: "&7Set Shop"
+        lore:
+          - "&7Click to &c&nset&7 the &cshop location&7."
 
-    setup-team-generator:
-      type: "FURNACE"
-      name: "&7Set Generator"
-      lore:
-        - "&7Click to &c&nset&7 the &cgenerator location&7."
+      team-upgrades:
+        type: "ANVIL"
+        name: "&7Set Upgrades"
+        lore:
+          - "&7Click to &c&nset&7 the &cupgrades location&7."
 
-    setup-generator:
-      type: "FURNACE"
-      name: "&7Set Generator"
-      lore:
-        - "&7Click to &c&nset&7 a &cgenerator location&7."
+      team-generator:
+        type: "FURNACE"
+        name: "&7Set Generator"
+        lore:
+          - "&7Click to &c&nset&7 the &cgenerator location&7."
 
-    setup-generators:
-      type: "FURNACE"
-      name: "&7Edit Generators"
-      lore:
-        - "&7Click to &c&nedit&7 the &cgenerators&7."
+      generator:
+        type: "FURNACE"
+        name: "&7Set Generator"
+        lore:
+          - "&7Click to &c&nset&7 a &cgenerator location&7."
+
+      generators:
+        type: "FURNACE"
+        name: "&7Edit Generators"
+        lore:
+          - "&7Click to &c&nedit&7 the &cgenerators&7."
 
     previous:
       type: "ARROW"
@@ -109,40 +116,41 @@ menus:
         name: "&r"
 
   setup:
-    title: "&7Arena Setup"
-    structure:
-      - "# # # # # # # # #"
-      - "# . A . M . T . #"
-      - "# . . G . E . . #"
-      - "# . . . S . . . #"
-      - "# # # # # # # # #"
+    main:
+      title: "&7Arena Setup"
+      structure:
+        - "# # # # # # # # #"
+        - "# . A . M . T . #"
+        - "# . . G L E . . #"
+        - "# . . . S . . . #"
+        - "# # # # # # # # #"
 
-  setup-teams:
-    title: "&7Select Team"
-    structure:
-      - "# # # # # # # # #"
-      - "# . . . . . . . #"
-      - "# . . . . . . . #"
-      - "# . . . . . . . #"
-      - "# # # # # # # # #"
+    teams:
+      title: "&7Select Team"
+      structure:
+        - "# # # # # # # # #"
+        - "# . . . . . . . #"
+        - "# . . . . . . . #"
+        - "# . . . . . . . #"
+        - "# # # # # # # # #"
 
-  setup-team:
-    title: "&7Team Setup"
-    structure:
-      - "# # # # # # # # #"
-      - "# . S . B . s . #"
-      - "# . . U . G . . #"
-      - "# . . . F . . . #"
-      - "# # # # # # # # #"
+    team:
+      title: "&7Team Setup"
+      structure:
+        - "# # # # # # # # #"
+        - "# . S . B . s . #"
+        - "# . . U . G . . #"
+        - "# . . . F . . . #"
+        - "# # # # # # # # #"
 
-  setup-generators:
-    title: "&7Edit Generators"
-    structure:
-      - "# # # # # # # # #"
-      - "# . . . . . . . #"
-      - "# . . . . . . . #"
-      - "# . . . . . . . #"
-      - "# # # # # # # # #"
+    generators:
+      title: "&7Edit Generators"
+      structure:
+        - "# # # # # # # # #"
+        - "# . . . . . . . #"
+        - "# . . . . . . . #"
+        - "# . . . . . . . #"
+        - "# # # # # # # # #"
 
 messages:
   prefix: "&c&lBed&f&lWars &f&l» &7"
@@ -156,9 +164,10 @@ messages:
   world-not-found: "&cThe world you entered was not found."
   setup-started: "&7The setup has started."
   game-not-found: "&cCannot find a game for you!"
+
   setup:
-    set-arenas: "&7Please enter the &c&narena count&7."
-    set-min-players: "&7Please enter the &c&nrequired players&7."
-    set-team-players: "&7Please enter the &c&nplayers per team&7."
+    arenas: "&7Please enter the &c&narena count&7."
+    min-players: "&7Please enter the &c&nrequired players&7."
+    team-players: "&7Please enter the &c&nplayers per team&7."
     complete: "&7The setup has been completed."
     incomplete: "&7The setup is incomplete. Please complete the setup."

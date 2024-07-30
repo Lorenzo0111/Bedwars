@@ -22,7 +22,7 @@ public class IntegerEditItem extends ConfiguredItem {
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent inventoryClickEvent) {
         player.closeInventory();
         ConversationUtil.start(player, new NumberInput(
-                plugin.getPrefixed("setup." + this.id),
+                plugin.getPrefixed(this.id),
                 this.consumer)
         );
     }

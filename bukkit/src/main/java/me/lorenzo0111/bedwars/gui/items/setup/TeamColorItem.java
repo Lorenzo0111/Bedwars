@@ -16,7 +16,7 @@ public class TeamColorItem extends ConfiguredItem {
     private final ChatColor color;
 
     public TeamColorItem(SetupSession session, ChatColor color) {
-        super("setup-team-color");
+        super("setup.team-color");
         this.session = session;
         this.color = color;
     }

@@ -54,6 +54,8 @@ public class Game extends AbstractGame {
     public void join(Player player) {
         players.add(player);
 
-        player.teleport(world.getSpawnLocation());
+        player.teleport(config.getSpectatorSpawn().toLocation(world));
+
+
     }
 }
