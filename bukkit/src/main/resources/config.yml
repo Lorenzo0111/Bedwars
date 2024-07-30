@@ -139,7 +139,7 @@ menus:
       structure:
         - "# # # # # # # # #"
         - "# . S . B . s . #"
-        - "# . . U . G . . #"
+        - "# . . . U . . . #"
         - "# . . . F . . . #"
         - "# # # # # # # # #"
 
@@ -172,8 +172,16 @@ messages:
     team-players: "&7Please enter the &c&nplayers per team&7."
     complete: "&7The setup has been completed."
     incomplete: "&7The setup is incomplete. Please complete the setup."
+    generator-added: "&7The generator has been added."
+    location: "&7The location has been saved."
 
   titles:
     start-countdown:
       title: "&c%time%"
       subtitle: "&7until the game starts."
+
+generators:
+  IRON_INGOT: 100
+  GOLD_INGOT: 200
+  DIAMOND: 300
+  EMERALD: 400

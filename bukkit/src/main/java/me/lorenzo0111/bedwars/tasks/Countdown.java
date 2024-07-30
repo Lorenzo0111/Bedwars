@@ -1,5 +1,6 @@
 package me.lorenzo0111.bedwars.tasks;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.lorenzo0111.bedwars.BedwarsPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -7,17 +8,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
+@AllArgsConstructor
 public class Countdown extends BukkitRunnable {
     @Getter
     private int seconds;
     private final @Nullable Consumer<Integer> onTick;
     private final @Nullable Runnable onFinish;
-
-    public Countdown(int seconds, @Nullable Consumer<Integer> onTick, @Nullable Runnable onFinish) {
-        this.seconds = seconds;
-        this.onTick = onTick;
-        this.onFinish = onFinish;
-    }
 
     @Override
     public void run() {

@@ -20,6 +20,7 @@ public class LocationEditItem extends ConfiguredItem {
     @Override
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent inventoryClickEvent) {
         this.consumer.accept(player.getLocation());
+        player.sendMessage(plugin.getPrefixed("setup.location"));
     }
 
 }

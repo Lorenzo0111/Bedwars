@@ -13,6 +13,7 @@ import me.lorenzo0111.bedwars.game.GameManager;
 import me.lorenzo0111.bedwars.game.setup.SetupManager;
 import me.lorenzo0111.bedwars.game.assign.RandomTeamAssigner;
 import me.lorenzo0111.bedwars.hooks.WorldsHook;
+import me.lorenzo0111.bedwars.listeners.GameListener;
 import me.lorenzo0111.bedwars.utils.BukkitScheduler;
 import me.lorenzo0111.bedwars.utils.StringUtils;
 import org.bukkit.Bukkit;
@@ -67,9 +68,8 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
         // ******** Commands ********
         this.getCommand("bedwars").setExecutor(new BedwarsCommand(this));
 
-
         // ******** Listeners ********
-
+        this.getServer().getPluginManager().registerEvents(new GameListener(this), this);
 
         // ******** Tasks ********
 

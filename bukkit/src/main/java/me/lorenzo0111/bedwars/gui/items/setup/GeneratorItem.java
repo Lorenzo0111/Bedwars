@@ -28,6 +28,7 @@ public class GeneratorItem extends ConfiguredItem {
     @Override
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent inventoryClickEvent) {
         session.config().getGenerators(material).add(new ConfigLocation(player.getLocation()));
+        player.sendMessage(plugin.getPrefixed("setup.generator-added"));
     }
 
     @Override

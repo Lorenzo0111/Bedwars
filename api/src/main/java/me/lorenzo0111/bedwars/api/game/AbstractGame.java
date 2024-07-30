@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import me.lorenzo0111.bedwars.api.game.config.GameConfiguration;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.*;
 
@@ -23,6 +24,16 @@ public abstract class AbstractGame {
     public abstract void stop();
     public abstract boolean isLoading();
     public abstract void join(Player player);
+
+    public abstract void onDeath(PlayerDeathEvent event);
+
+    public ChatColor getTeam(Player player) {
+        return this.teams.entrySet().stream()
+                .filter(entry -> entry.getValue().contains(player))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(null);
+    }
 
     public boolean canJoin() {
         return this.state.canJoin() && this.players.size() < this.config.getPlayersPerTeam() * this.config.getTeams().size();

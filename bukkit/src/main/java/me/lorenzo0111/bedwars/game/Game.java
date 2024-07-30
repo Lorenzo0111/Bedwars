@@ -4,18 +4,23 @@ import me.lorenzo0111.bedwars.BedwarsPlugin;
 import me.lorenzo0111.bedwars.api.game.AbstractGame;
 import me.lorenzo0111.bedwars.api.game.GameState;
 import me.lorenzo0111.bedwars.api.game.config.GameConfiguration;
+import me.lorenzo0111.bedwars.api.game.config.TeamConfig;
 import me.lorenzo0111.bedwars.hooks.WorldsHook;
 import me.lorenzo0111.bedwars.tasks.Countdown;
+import me.lorenzo0111.bedwars.tasks.GeneratorTask;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Game extends AbstractGame {
+    private final List<GeneratorTask> generatorTasks = new ArrayList<>();
     private World world;
     private Countdown countdown = null;
 
@@ -68,12 +73,22 @@ public class Game extends AbstractGame {
 
         players.forEach(player -> player.setGameMode(GameMode.SURVIVAL));
 
+        config.getGenerators().forEach((material, locations) ->
+                locations.forEach(location ->
+                        generatorTasks.add(new GeneratorTask(
+                                material,
+                                location.toLocation(world))
+                        )));
+
         setState(GameState.PLAYING);
     }
 
     @Override
     public void stop() {
+        generatorTasks.forEach(GeneratorTask::cancel);
+        generatorTasks.clear();
         players.forEach(player -> player.getInventory().clear());
+        players.clear();
 
         setState(GameState.SHUTDOWN);
         WorldsHook.deleteWorld(uuid);
@@ -95,5 +110,30 @@ public class Game extends AbstractGame {
         player.setGameMode(GameMode.ADVENTURE);
 
         if (players.size() >= config.getMinPlayers()) startCountdown();
+    }
+
+    @Override
+    public void onDeath(PlayerDeathEvent event) {
+        ChatColor team = this.getTeam(event.getEntity());
+        if (team == null) return;
+
+        event.setDroppedExp(0);
+        event.getDrops().clear();
+
+        Bukkit.getScheduler().runTaskLater(BedwarsPlugin.getInstance(), () -> event.getEntity().spigot().respawn(), 1L);
+
+        TeamConfig teamConfig = config.getTeam(team);
+        if (teamConfig.getBed().toLocation(world).getBlock().getType().isAir()) {
+            players.remove(event.getEntity());
+            teams.get(team).remove(event.getEntity());
+
+            event.getEntity().setGameMode(GameMode.SPECTATOR);
+            event.getEntity().teleport(config.getSpectatorSpawn().toLocation(world));
+
+            // TODO: Handle team elimination
+            return;
+        }
+
+        event.getEntity().teleport(teamConfig.getSpawn().toLocation(world));
     }
 }
