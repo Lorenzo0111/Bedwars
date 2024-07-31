@@ -8,6 +8,7 @@ import me.lorenzo0111.bedwars.api.game.config.ConfigLocation;
 import me.lorenzo0111.bedwars.api.game.config.GameConfiguration;
 import me.lorenzo0111.bedwars.api.game.config.TeamConfig;
 import me.lorenzo0111.bedwars.api.hologram.HologramHook;
+import me.lorenzo0111.bedwars.api.scoreboard.ScoreboardHook;
 import me.lorenzo0111.bedwars.commands.BedwarsCommand;
 import me.lorenzo0111.bedwars.data.SQLHandler;
 import me.lorenzo0111.bedwars.game.GameManager;
@@ -15,6 +16,7 @@ import me.lorenzo0111.bedwars.game.setup.SetupManager;
 import me.lorenzo0111.bedwars.game.assign.RandomTeamAssigner;
 import me.lorenzo0111.bedwars.hooks.hologram.HologramHookWrapper;
 import me.lorenzo0111.bedwars.hooks.WorldsHook;
+import me.lorenzo0111.bedwars.hooks.scoreboard.ScoreboardHookWrapper;
 import me.lorenzo0111.bedwars.listeners.GameListener;
 import me.lorenzo0111.bedwars.tasks.BukkitScheduler;
 import me.lorenzo0111.bedwars.utils.StringUtils;
@@ -86,6 +88,7 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
     public void onDisable() {
         try {
             HologramHookWrapper.unload();
+            ScoreboardHookWrapper.unload();
 
             this.gameManager.stop();
             this.database.close();
@@ -133,6 +136,7 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
 
         WorldsHook.init();
         HologramHookWrapper.init();
+        ScoreboardHookWrapper.init();
 
         this.database.close();
         this.log("&c&m---------------------------------------------------");
@@ -165,5 +169,10 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
     @Override
     public void setHologramHook(HologramHook hook) {
         HologramHookWrapper.setHook(hook);
+    }
+
+    @Override
+    public void setScoreboardHook(ScoreboardHook hook) {
+        ScoreboardHookWrapper.setHook(hook);
     }
 }
