@@ -103,6 +103,15 @@ menus:
         - ""
         - "&7&o(( Click to join or spectate ))"
 
+    shop:
+      type: "BARRIER" # This gets automatically replaced
+      name: "%name%"
+      lore:
+        - "&7Price: &c%price%"
+        - "&7Amount: &c%amount%"
+        - ""
+        - "&7&o(( Click to buy ))"
+
     previous:
       type: "ARROW"
       name: "&cPrevious page"
@@ -178,7 +187,7 @@ menus:
         - "# . . . . . . . #"
         - "# . . . . . . . #"
         - "# . . . . . . . #"
-        - "# # # # # # # # #"
+        - "# # # < # > # # #"
 
 generators:
   IRON_INGOT: 100

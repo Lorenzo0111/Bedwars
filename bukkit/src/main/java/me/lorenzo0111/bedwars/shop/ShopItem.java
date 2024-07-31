@@ -1,6 +1,7 @@
 package me.lorenzo0111.bedwars.shop;
 
 import me.lorenzo0111.bedwars.utils.ShopUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -8,20 +9,31 @@ import org.jetbrains.annotations.Nullable;
 import xyz.xenondevs.invui.item.builder.ItemBuilder;
 
 public record ShopItem(String name,
-                       Material material,
+                       String material,
                        int amount,
-                       int cost,
-                       Material costType) {
+                       int price,
+                       Material priceType) {
 
-    public @Nullable ItemStack buy(Player player) {
-        if (!ShopUtils.hasEnough(player, costType, cost)) return null;
+    public @Nullable ItemStack buy(Player player, @Nullable ChatColor color) {
+        if (!ShopUtils.hasEnough(player, priceType, price)) return null;
 
-        ShopUtils.remove(player, costType, cost);
+        ShopUtils.remove(player, priceType, price);
 
-        return new ItemBuilder(material)
+        Material mat = material.equalsIgnoreCase("WOOL") ?
+                Material.getMaterial(color + "_WOOL") :
+                Material.getMaterial(material);
+        if (mat == null) return null;
+
+        return new ItemBuilder(mat)
                 .setDisplayName(name)
                 .setAmount(amount)
                 .get();
+    }
+
+    public Material parseMaterial() {
+        return material.equalsIgnoreCase("WOOL") ?
+                Material.WHITE_WOOL :
+                Material.getMaterial(material);
     }
 
 }

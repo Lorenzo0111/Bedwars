@@ -1,7 +1,9 @@
 package me.lorenzo0111.bedwars.shop;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import me.lorenzo0111.bedwars.BedwarsPlugin;
+import me.lorenzo0111.bedwars.api.items.SpecialItem;
 import me.lorenzo0111.bedwars.utils.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -17,6 +19,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ShopManager {
     private final BedwarsPlugin plugin;
+    @Getter
+    private final List<SpecialItem> specialItems = new ArrayList<>();
     private final Map<String, List<ShopItem>> shops = new HashMap<>();
 
     public void reload() {
@@ -33,7 +37,7 @@ public class ShopManager {
 
         for (String key : config.getKeys(false)) {
             String name = StringUtils.color(config.getString(key + ".name"));
-            Material material = Material.getMaterial(config.getString(key + ".material", "WOOL"));
+            String material = config.getString(key + ".material");
             String priceData = config.getString(key + ".price", "0I");
             int price = Integer.parseInt(priceData.substring(0, priceData.length() - 1));
             int amount = config.getInt(key + ".amount", 1);

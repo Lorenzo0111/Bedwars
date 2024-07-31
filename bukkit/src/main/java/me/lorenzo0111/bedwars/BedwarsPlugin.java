@@ -8,6 +8,7 @@ import me.lorenzo0111.bedwars.api.game.config.ConfigLocation;
 import me.lorenzo0111.bedwars.api.game.config.GameConfiguration;
 import me.lorenzo0111.bedwars.api.game.config.TeamConfig;
 import me.lorenzo0111.bedwars.api.hologram.HologramHook;
+import me.lorenzo0111.bedwars.api.items.SpecialItem;
 import me.lorenzo0111.bedwars.api.scoreboard.ScoreboardHook;
 import me.lorenzo0111.bedwars.commands.BedwarsCommand;
 import me.lorenzo0111.bedwars.data.SQLHandler;
@@ -181,5 +182,10 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
     @Override
     public void setScoreboardHook(ScoreboardHook hook) {
         ScoreboardHookWrapper.setHook(hook);
+    }
+
+    @Override
+    public void registerSpecialItem(SpecialItem item) {
+        this.shopManager.getSpecialItems().add(item);
     }
 }
