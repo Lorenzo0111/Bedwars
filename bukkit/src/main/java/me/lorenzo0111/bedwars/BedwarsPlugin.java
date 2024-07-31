@@ -21,6 +21,8 @@ import me.lorenzo0111.bedwars.hooks.scoreboard.ScoreboardHookWrapper;
 import me.lorenzo0111.bedwars.listeners.GameListener;
 import me.lorenzo0111.bedwars.listeners.LobbyListener;
 import me.lorenzo0111.bedwars.shop.ShopManager;
+import me.lorenzo0111.bedwars.shop.SpecialItemFactory;
+import me.lorenzo0111.bedwars.shop.items.FireballItem;
 import me.lorenzo0111.bedwars.tasks.BukkitScheduler;
 import me.lorenzo0111.bedwars.utils.StringUtils;
 import org.bukkit.Bukkit;
@@ -42,6 +44,7 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
     private SQLHandler database;
     private GameManager gameManager;
     private SetupManager setupManager;
+    private SpecialItemFactory specialItemFactory;
     private ShopManager shopManager;
     @Setter private TeamAssigner teamAssigner;
 
@@ -73,7 +76,10 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
         this.teamAssigner = new RandomTeamAssigner();
         this.gameManager = new GameManager(this);
         this.setupManager = new SetupManager(this);
+        this.specialItemFactory = new SpecialItemFactory();
         this.shopManager = new ShopManager(this);
+
+        this.specialItemFactory.registerSpecialItem(new FireballItem());
 
         this.reload();
         this.firstRun = false;
@@ -185,7 +191,7 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
     }
 
     @Override
-    public void registerSpecialItem(SpecialItem item) {
-        this.shopManager.getSpecialItems().add(item);
+    public void registerSpecialItem(SpecialItem item) throws IllegalArgumentException {
+        this.specialItemFactory.registerSpecialItem(item);
     }
 }

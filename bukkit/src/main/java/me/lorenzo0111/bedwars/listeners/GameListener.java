@@ -3,6 +3,7 @@ package me.lorenzo0111.bedwars.listeners;
 import lombok.RequiredArgsConstructor;
 import me.lorenzo0111.bedwars.BedwarsPlugin;
 import me.lorenzo0111.bedwars.api.game.AbstractGame;
+import me.lorenzo0111.bedwars.api.items.SpecialItem;
 import me.lorenzo0111.bedwars.gui.menus.ShopMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -12,6 +13,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 
 import java.util.List;
@@ -72,6 +75,19 @@ public class GameListener implements Listener {
             }
         }
 
+    }
+
+    @EventHandler
+    public void onInteract(PlayerInteractEvent event) {
+        ItemStack item = event.getItem();
+        if (item == null || item.getType().isAir()) return;
+
+        AbstractGame game = plugin.getGameManager().getGame(event.getPlayer());
+        if (game == null) return;
+
+        SpecialItem specialItem = plugin.getSpecialItemFactory().getSpecialItem(item);
+        if (specialItem != null)
+            specialItem.handle(event);
     }
 
 }

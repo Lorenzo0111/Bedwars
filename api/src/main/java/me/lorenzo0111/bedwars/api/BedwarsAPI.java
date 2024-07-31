@@ -16,5 +16,5 @@ public interface BedwarsAPI {
     void setHologramHook(HologramHook hook);
     void setScoreboardHook(ScoreboardHook hook);
 
-    void registerSpecialItem(SpecialItem item);
+    void registerSpecialItem(SpecialItem item) throws IllegalArgumentException;
 }

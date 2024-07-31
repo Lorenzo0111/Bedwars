@@ -19,6 +19,10 @@ win: "&7Team %color%%team% &7has won the game."
 shop: "&6&lShop"
 upgrades: "&6&lUpgrades"
 
+items:
+  fireball: "&cFireball"
+  bridge-egg: "&eBridge Egg"
+
 setup:
   arenas: "&7Please enter the &c&narena count&7."
   min-players: "&7Please enter the &c&nrequired players&7."

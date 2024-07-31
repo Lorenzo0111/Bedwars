@@ -19,8 +19,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ShopManager {
     private final BedwarsPlugin plugin;
-    @Getter
-    private final List<SpecialItem> specialItems = new ArrayList<>();
     private final Map<String, List<ShopItem>> shops = new HashMap<>();
 
     public void reload() {
