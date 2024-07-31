@@ -98,9 +98,9 @@ public class Game extends AbstractGame {
 
         this.scoreboard = ScoreboardHookWrapper.getHook()
                 .create(
-                        plugin.getMessage("scoreboards.lobby.title"),
+                        plugin.getMessage("scoreboards.game.title"),
                         () -> {
-                            List<String> lines = plugin.getMessages("scoreboards.lobby.lines");
+                            List<String> lines = plugin.getMessages("scoreboards.game.lines");
 
                             for (int i = 0; i < lines.size(); i++) {
                                 if (!lines.get(i).equalsIgnoreCase("%teams%")) continue;
@@ -108,7 +108,7 @@ public class Game extends AbstractGame {
                                 for (int j = 0; j < teams.size(); j++) {
                                     Map.Entry<ChatColor, List<Player>> team = (Map.Entry<ChatColor, List<Player>>) teams.entrySet().toArray()[j];
 
-                                    lines.add(i + j, plugin.getMessage("scoreboards.lobby.team-format")
+                                    lines.add(i + j, plugin.getMessage("scoreboards.game.team-format")
                                             .replace("%team%", team.getKey().name())
                                             .replace("%color%", team.getKey().toString())
                                             .replace("%players%", String.valueOf(team.getValue().size())));

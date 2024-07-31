@@ -1,0 +1,17 @@
+# Shop Configuration File
+
+# Price system:
+# Example: 10I = 10 Iron Ingots
+# Available currencies: I(ron), G(old), D(iamonds), E(meralds)
+
+shop:
+  wool:
+    name: "&fWool"
+    material: "WOOL" # Wool will automatically be colored
+    price: "1I"
+
+upgrades:
+  wool:
+    name: "&fWool"
+    material: "WOOL" # Wool will automatically be colored
+    price: "1I"

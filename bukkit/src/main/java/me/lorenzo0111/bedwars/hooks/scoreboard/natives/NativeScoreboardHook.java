@@ -20,4 +20,9 @@ public class NativeScoreboardHook extends ScoreboardHook {
 
         return scoreboard;
     }
+
+    @Override
+    public void tick() {
+        scoreboards.forEach(WrappedScoreboard::update);
+    }
 }

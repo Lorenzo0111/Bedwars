@@ -10,11 +10,11 @@ public abstract class ScoreboardHook {
     public abstract String getId();
 
     public void unload() {
-        scoreboards.forEach(WrappedScoreboard::destroy);
-        scoreboards.clear();
+        new ArrayList<>(scoreboards).forEach(WrappedScoreboard::destroy);
     }
 
     public abstract WrappedScoreboard create(String title, Callable<List<String>> lines);
+    public abstract void tick();
 
     public void remove(WrappedScoreboard scoreboard) {
         scoreboards.remove(scoreboard);

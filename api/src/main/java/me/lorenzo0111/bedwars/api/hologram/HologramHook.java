@@ -12,8 +12,7 @@ public abstract class HologramHook {
     public abstract String getId();
 
     public void unload() {
-        holograms.forEach(WrappedHologram::remove);
-        holograms.clear();
+        new ArrayList<>(holograms).forEach(WrappedHologram::remove);
     }
 
     public abstract WrappedHologram create(Location location, List<String> lines, List<Material> materialLines);

@@ -6,11 +6,11 @@ import org.bukkit.inventory.ItemStack;
 
 public final class ShopUtils {
 
-    public boolean hasEnough(Player player, Material material, int amount) {
+    public static boolean hasEnough(Player player, Material material, int amount) {
         return player.getInventory().containsAtLeast(new ItemStack(material), amount);
     }
 
-    public void remove(Player player, Material material, int amount) {
+    public static void remove(Player player, Material material, int amount) {
         player.getInventory().removeItem(new ItemStack(material, amount));
     }
 }

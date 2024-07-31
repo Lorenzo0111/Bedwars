@@ -1,7 +1,9 @@
 package me.lorenzo0111.bedwars.hooks.scoreboard.natives;
 
+import me.lorenzo0111.bedwars.BedwarsPlugin;
 import me.lorenzo0111.bedwars.api.scoreboard.ScoreboardHook;
 import me.lorenzo0111.bedwars.api.scoreboard.WrappedScoreboard;
+import me.lorenzo0111.bedwars.hooks.scoreboard.ScoreboardHookWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Criteria;
@@ -12,6 +14,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.logging.Level;
 
 public class NativeScoreboard extends WrappedScoreboard {
     private final List<Player> players = new ArrayList<>();
@@ -55,6 +58,8 @@ public class NativeScoreboard extends WrappedScoreboard {
         players.clear();
         objective.unregister();
         destroyed = true;
+
+        ScoreboardHookWrapper.getHook().remove(this);
     }
 
     @Override
@@ -67,7 +72,7 @@ public class NativeScoreboard extends WrappedScoreboard {
                 objective.getScore(currentLines.get(i)).setScore(i);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            BedwarsPlugin.getInstance().getLogger().log(Level.SEVERE, "An error occurred while updating the scoreboard", e);
         }
     }
 }
