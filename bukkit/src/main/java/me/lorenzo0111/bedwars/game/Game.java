@@ -15,9 +15,12 @@ import me.lorenzo0111.bedwars.tasks.GeneratorDropTask;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,6 +98,24 @@ public class Game extends AbstractGame {
                             List.of(material)
                     ));
                 }));
+
+        config.getTeams().forEach((team, configuration) -> {
+            Villager villager = (Villager) world.spawnEntity(configuration.getShop().toLocation(world), EntityType.VILLAGER);
+            villager.setAI(false);
+            villager.setInvulnerable(true);
+            villager.setCustomNameVisible(true);
+            villager.setCustomName(plugin.getMessage("shop"));
+            villager.setProfession(Villager.Profession.NITWIT);
+            villager.setMetadata("shop", new FixedMetadataValue(plugin, "shop-" + team.name()));
+
+            villager = (Villager) world.spawnEntity(configuration.getUpgrades().toLocation(world), EntityType.VILLAGER);
+            villager.setAI(false);
+            villager.setInvulnerable(true);
+            villager.setCustomNameVisible(true);
+            villager.setCustomName(plugin.getMessage("upgrades"));
+            villager.setProfession(Villager.Profession.NITWIT);
+            villager.setMetadata("shop", new FixedMetadataValue(plugin, "upgrades-" + team.name()));
+        });
 
         this.scoreboard = ScoreboardHookWrapper.getHook()
                 .create(

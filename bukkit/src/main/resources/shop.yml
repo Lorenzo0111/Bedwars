@@ -8,10 +8,12 @@ shop:
   wool:
     name: "&fWool"
     material: "WOOL" # Wool will automatically be colored
+    amount: 5
     price: "1I"
 
 upgrades:
   wool:
     name: "&fWool"
     material: "WOOL" # Wool will automatically be colored
+    amount: 5
     price: "1I"

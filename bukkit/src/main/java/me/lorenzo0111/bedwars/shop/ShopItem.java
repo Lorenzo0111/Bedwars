@@ -9,6 +9,7 @@ import xyz.xenondevs.invui.item.builder.ItemBuilder;
 
 public record ShopItem(String name,
                        Material material,
+                       int amount,
                        int cost,
                        Material costType) {
 
@@ -19,6 +20,7 @@ public record ShopItem(String name,
 
         return new ItemBuilder(material)
                 .setDisplayName(name)
+                .setAmount(amount)
                 .get();
     }
 

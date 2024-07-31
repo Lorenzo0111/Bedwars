@@ -16,6 +16,9 @@ team-elimination: "&7Team %color%%team% &7has been eliminated."
 bed-destroyed: "&7Team %color%%team% &7bed has been destroyed by %player_color%%player%&7."
 win: "&7Team %color%%team% &7has won the game."
 
+shop: "&6&lShop"
+upgrades: "&6&lUpgrades"
+
 setup:
   arenas: "&7Please enter the &c&narena count&7."
   min-players: "&7Please enter the &c&nrequired players&7."

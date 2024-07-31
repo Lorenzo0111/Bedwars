@@ -143,6 +143,8 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
         HologramHookWrapper.init();
         ScoreboardHookWrapper.init();
 
+        this.shopManager.reload();
+
         this.database.close();
         this.log("&c&m---------------------------------------------------");
         this.log("             &c&lBed&f&lWars &7v" + this.getDescription().getVersion());
