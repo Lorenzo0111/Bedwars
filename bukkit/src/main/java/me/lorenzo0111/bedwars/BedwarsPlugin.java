@@ -18,6 +18,7 @@ import me.lorenzo0111.bedwars.hooks.hologram.HologramHookWrapper;
 import me.lorenzo0111.bedwars.hooks.WorldsHook;
 import me.lorenzo0111.bedwars.hooks.scoreboard.ScoreboardHookWrapper;
 import me.lorenzo0111.bedwars.listeners.GameListener;
+import me.lorenzo0111.bedwars.listeners.LobbyListener;
 import me.lorenzo0111.bedwars.tasks.BukkitScheduler;
 import me.lorenzo0111.bedwars.utils.StringUtils;
 import org.bukkit.Bukkit;
@@ -78,6 +79,7 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
 
         // ******** Listeners ********
         this.getServer().getPluginManager().registerEvents(new GameListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new LobbyListener(this), this);
 
         // ******** Tasks ********
 

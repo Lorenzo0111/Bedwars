@@ -8,7 +8,7 @@ import me.lorenzo0111.bedwars.hooks.hologram.decent.DecentHologramHook;
 import me.lorenzo0111.bedwars.hooks.hologram.natives.NativeHologramHook;
 import org.bukkit.Bukkit;
 
-public class HologramHookWrapper {
+public final class HologramHookWrapper {
     @Getter @Setter
     private static HologramHook hook;
 

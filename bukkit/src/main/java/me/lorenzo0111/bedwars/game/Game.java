@@ -6,8 +6,10 @@ import me.lorenzo0111.bedwars.api.game.GameState;
 import me.lorenzo0111.bedwars.api.game.config.GameConfiguration;
 import me.lorenzo0111.bedwars.api.game.config.TeamConfig;
 import me.lorenzo0111.bedwars.api.hologram.WrappedHologram;
+import me.lorenzo0111.bedwars.api.scoreboard.WrappedScoreboard;
 import me.lorenzo0111.bedwars.hooks.WorldsHook;
 import me.lorenzo0111.bedwars.hooks.hologram.HologramHookWrapper;
+import me.lorenzo0111.bedwars.hooks.scoreboard.ScoreboardHookWrapper;
 import me.lorenzo0111.bedwars.tasks.CountdownTask;
 import me.lorenzo0111.bedwars.tasks.GeneratorDropTask;
 import org.bukkit.Bukkit;
@@ -22,9 +24,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Game extends AbstractGame {
+    private static final BedwarsPlugin plugin = BedwarsPlugin.getInstance();
     private final List<GeneratorDropTask> generatorTasks = new ArrayList<>();
     private final List<WrappedHologram> generatorHolograms = new ArrayList<>();
     private CountdownTask countdown = null;
+    private WrappedScoreboard scoreboard;
 
     public Game(GameConfiguration config) {
         super(config);
@@ -36,8 +40,6 @@ public class Game extends AbstractGame {
 
     @Override
     public void startCountdown() {
-        BedwarsPlugin plugin = BedwarsPlugin.getInstance();
-
         this.setState(GameState.STARTING);
 
         this.countdown = new CountdownTask(5, seconds -> players.forEach(player -> player.sendTitle(
@@ -58,11 +60,13 @@ public class Game extends AbstractGame {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void start() {
+        setState(GameState.PLAYING);
+
         teams.clear();
 
-        Map<Player, ChatColor> assignedPlayers = BedwarsPlugin.getInstance()
-                .getTeamAssigner()
+        Map<Player, ChatColor> assignedPlayers = plugin.getTeamAssigner()
                 .assignAll(players, new ArrayList<>(config.getTeams().keySet()),
                         config.getPlayersPerTeam());
 
@@ -82,7 +86,7 @@ public class Game extends AbstractGame {
                             location.toLocation(world))
                     );
 
-                    List<String> lines = BedwarsPlugin.getInstance().getMessages("generators." + material.name().toLowerCase());
+                    List<String> lines = plugin.getMessages("generators." + material.name().toLowerCase());
                     if (lines.isEmpty()) return;
 
                     generatorHolograms.add(HologramHookWrapper.getHook().create(
@@ -92,7 +96,30 @@ public class Game extends AbstractGame {
                     ));
                 }));
 
-        setState(GameState.PLAYING);
+        this.scoreboard = ScoreboardHookWrapper.getHook()
+                .create(
+                        plugin.getMessage("scoreboards.lobby.title"),
+                        () -> {
+                            List<String> lines = plugin.getMessages("scoreboards.lobby.lines");
+
+                            for (int i = 0; i < lines.size(); i++) {
+                                if (!lines.get(i).equalsIgnoreCase("%teams%")) continue;
+
+                                for (int j = 0; j < teams.size(); j++) {
+                                    Map.Entry<ChatColor, List<Player>> team = (Map.Entry<ChatColor, List<Player>>) teams.entrySet().toArray()[j];
+
+                                    lines.add(i + j, plugin.getMessage("scoreboards.lobby.team-format")
+                                            .replace("%team%", team.getKey().name())
+                                            .replace("%color%", team.getKey().toString())
+                                            .replace("%players%", String.valueOf(team.getValue().size())));
+                                }
+                            }
+
+                            return lines;
+                        }
+                );
+
+        players.forEach(scoreboard::show);
     }
 
     @Override
@@ -105,6 +132,10 @@ public class Game extends AbstractGame {
 
         players.forEach(player -> player.getInventory().clear());
         players.clear();
+
+        if (this.scoreboard != null)
+            this.scoreboard.destroy();
+        this.scoreboard = null;
 
         setState(GameState.SHUTDOWN);
         WorldsHook.deleteWorld(uuid);
@@ -139,8 +170,7 @@ public class Game extends AbstractGame {
 
     @Override
     public void onWin(ChatColor winner) {
-        this.broadcast(BedwarsPlugin.getInstance()
-                .getPrefixed("win")
+        this.broadcast(plugin.getPrefixed("win")
                 .replace("%team%", winner.name())
                 .replace("%color%", winner.toString()));
 
@@ -156,15 +186,13 @@ public class Game extends AbstractGame {
         if (event.getDamageSource().getCausingEntity() instanceof Player killer) {
             ChatColor killerColor = this.getTeam(killer);
 
-            this.broadcast(BedwarsPlugin.getInstance()
-                    .getPrefixed("kill")
+            this.broadcast(plugin.getPrefixed("kill")
                     .replace("%killer_color%", killerColor != null ? killerColor.toString() : ChatColor.GRAY.toString())
                     .replace("%killer%", killer.getName())
                     .replace("%player_color%", team.toString())
                     .replace("%player%", event.getEntity().getName()));
         } else {
-            this.broadcast(BedwarsPlugin.getInstance()
-                    .getPrefixed("death")
+            this.broadcast(plugin.getPrefixed("death")
                     .replace("%player_color%", team.toString())
                     .replace("%player%", event.getEntity().getName()));
         }
@@ -172,7 +200,7 @@ public class Game extends AbstractGame {
         event.setDroppedExp(0);
         event.getDrops().clear();
 
-        Bukkit.getScheduler().runTaskLater(BedwarsPlugin.getInstance(), () -> event.getEntity().spigot().respawn(), 1L);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> event.getEntity().spigot().respawn(), 1L);
         event.getEntity().setGameMode(GameMode.SPECTATOR);
         event.getEntity().teleport(config.getSpectatorSpawn().toLocation(world));
 
@@ -182,8 +210,7 @@ public class Game extends AbstractGame {
             teams.get(team).remove(event.getEntity());
 
             if (teams.get(team).isEmpty()) {
-                this.broadcast(BedwarsPlugin.getInstance()
-                        .getPrefixed("team-elimination")
+                this.broadcast(plugin.getPrefixed("team-elimination")
                         .replace("%team%", team.name())
                         .replace("%color%", team.toString()));
 
@@ -197,9 +224,9 @@ public class Game extends AbstractGame {
         }
 
         new CountdownTask(5, seconds -> event.getEntity().sendTitle(
-                BedwarsPlugin.getInstance().getMessage("titles.respawn.title")
+                plugin.getMessage("titles.respawn.title")
                         .replace("%time%", String.valueOf(seconds)),
-                BedwarsPlugin.getInstance().getMessage("titles.respawn.subtitle")
+                plugin.getMessage("titles.respawn.subtitle")
                         .replace("%time%", String.valueOf(seconds)),
                 0, 20, 0
         ), () -> {
@@ -225,8 +252,7 @@ public class Game extends AbstractGame {
                 .stream()
                 .filter(entry -> entry.getValue().getBed().toLocation(world).equals(event.getBlock().getLocation()))
                 .findFirst()
-                .ifPresent(entry -> this.broadcast(BedwarsPlugin.getInstance()
-                        .getPrefixed("bed-destroyed")
+                .ifPresent(entry -> this.broadcast(plugin.getPrefixed("bed-destroyed")
                         .replace("%team%", entry.getKey().name())
                         .replace("%color%", entry.getKey().toString())
                         .replace("%player%", event.getPlayer().getName())

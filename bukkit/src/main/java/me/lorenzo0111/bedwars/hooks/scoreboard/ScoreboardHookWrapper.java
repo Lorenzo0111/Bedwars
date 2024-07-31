@@ -6,7 +6,7 @@ import me.lorenzo0111.bedwars.BedwarsPlugin;
 import me.lorenzo0111.bedwars.api.scoreboard.ScoreboardHook;
 import me.lorenzo0111.bedwars.hooks.scoreboard.natives.NativeScoreboardHook;
 
-public class ScoreboardHookWrapper {
+public final class ScoreboardHookWrapper {
     @Getter
     @Setter
     private static ScoreboardHook hook;

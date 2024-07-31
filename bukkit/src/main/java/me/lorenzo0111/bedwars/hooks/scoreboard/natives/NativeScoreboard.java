@@ -9,10 +9,12 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 public class NativeScoreboard extends WrappedScoreboard {
+    private final List<Player> players = new ArrayList<>();
     private final Scoreboard scoreboard;
     private final Objective objective;
     private boolean destroyed = false;
@@ -35,16 +37,22 @@ public class NativeScoreboard extends WrappedScoreboard {
         if (destroyed) return;
 
         player.setScoreboard(scoreboard);
+        players.add(player);
     }
 
     @Override
     @SuppressWarnings("ConstantConditions")
     public void hide(Player player) {
         player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
+        players.remove(player);
     }
 
     @Override
     public void destroy() {
+        for (Player player : players)
+            hide(player);
+
+        players.clear();
         objective.unregister();
         destroyed = true;
     }

@@ -41,3 +41,20 @@ generators:
   emerald:
     - "&e&lEmeralds"
     - "&7Emeralds will spawn here."
+
+scoreboards:
+  lobby:
+    title: "&e&lBedWars"
+    lines:
+      - "&7Players: &c%players%"
+      - "&7Games: &c%games%"
+      - "&r"
+      - "&emc.example.com"
+
+  game:
+    title: "&e&lBedWars"
+    team-format: "&7%color%%team% &7- %players%"
+    lines:
+      - "%teams%"
+      - "&r"
+      - "&emc.example.com"
