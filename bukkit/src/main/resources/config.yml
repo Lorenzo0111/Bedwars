@@ -93,6 +93,16 @@ menus:
         lore:
           - "&7Click to &c&nedit&7 the &cgenerators&7."
 
+    game:
+      type: "RED_BED"
+      name: "&7% (&c%players%&7/&c%max_players%&7)"
+      lore:
+        - "&7Id: &c%id%"
+        - "&7Arena: &c%arena%"
+        - "&7State: &c%state%"
+        - ""
+        - "&7&o(( Click to join or spectate ))"
+
     previous:
       type: "ARROW"
       name: "&cPrevious page"
@@ -151,6 +161,15 @@ menus:
         - "# . . . . . . . #"
         - "# . . . . . . . #"
         - "# # # # # # # # #"
+
+    games:
+      title: "&7Games"
+      structure:
+        - "# # # # # # # # #"
+        - "# . . . . . . . #"
+        - "# . . . . . . . #"
+        - "# . . . . . . . #"
+        - "# # # < # > # # #"
 
 generators:
   IRON_INGOT: 100

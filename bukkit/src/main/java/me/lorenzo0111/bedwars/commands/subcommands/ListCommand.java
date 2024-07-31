@@ -3,7 +3,9 @@ package me.lorenzo0111.bedwars.commands.subcommands;
 import me.lorenzo0111.bedwars.api.game.AbstractGame;
 import me.lorenzo0111.bedwars.commands.BedwarsCommand;
 import me.lorenzo0111.bedwars.commands.SubCommand;
+import me.lorenzo0111.bedwars.gui.menus.GamesMenu;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import static me.lorenzo0111.bedwars.utils.StringUtils.color;
@@ -16,6 +18,11 @@ public class ListCommand extends SubCommand {
 
     @Override
     public void handle(CommandSender sender, String[] args) {
+        if (args.length > 0 && args[0].equalsIgnoreCase("-m") && sender instanceof Player player) {
+            new GamesMenu().open(player);
+            return;
+        }
+
         String prefix = plugin.getMessage("prefix");
         sender.sendMessage(color(prefix + "&c&m-------------------------------"));
 
@@ -42,4 +49,8 @@ public class ListCommand extends SubCommand {
         return "List all current games";
     }
 
+    @Override
+    public String getUsage() {
+        return "list [-m]";
+    }
 }

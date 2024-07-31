@@ -15,8 +15,8 @@ public class DecentHologramHook extends HologramHook {
     }
 
     @Override
-    public WrappedHologram create(Location location, List<String> lines, List<Material> materialLines) {
-        DecentHologram hologram = new DecentHologram(this, location, lines, materialLines);
+    public WrappedHologram create(Location location, List<String> stringLines, List<Material> materialLines) {
+        DecentHologram hologram = new DecentHologram(this, location, stringLines, materialLines);
         holograms.add(hologram);
         hologram.spawn();
 

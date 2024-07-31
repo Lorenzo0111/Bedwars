@@ -129,6 +129,15 @@ public class Game extends AbstractGame {
     }
 
     @Override
+    public void spectate(Player player) {
+        if (players.contains(player)) return;
+
+        player.getInventory().clear();
+        player.teleport(config.getSpectatorSpawn().toLocation(world));
+        player.setGameMode(GameMode.SPECTATOR);
+    }
+
+    @Override
     public void onWin(ChatColor winner) {
         this.broadcast(BedwarsPlugin.getInstance()
                 .getPrefixed("win")

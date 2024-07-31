@@ -15,8 +15,8 @@ public class NativeHologramHook extends HologramHook {
     }
 
     @Override
-    public WrappedHologram create(Location location, List<String> lines, List<Material> materialLines) {
-        NativeHologram hologram = new NativeHologram(this, location, lines, materialLines);
+    public WrappedHologram create(Location location, List<String> stringLines, List<Material> materialLines) {
+        NativeHologram hologram = new NativeHologram(this, location, stringLines, materialLines);
         holograms.add(hologram);
         hologram.spawn();
 

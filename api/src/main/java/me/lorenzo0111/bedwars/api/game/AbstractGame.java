@@ -26,7 +26,9 @@ public abstract class AbstractGame {
     public abstract void start();
     public abstract void stop();
     public abstract boolean isLoading();
+
     public abstract void join(Player player);
+    public abstract void spectate(Player player);
 
     public abstract void onWin(ChatColor winner);
     public abstract void onDeath(PlayerDeathEvent event);
