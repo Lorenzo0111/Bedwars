@@ -3,6 +3,8 @@ package me.lorenzo0111.bedwars;
 import lombok.Getter;
 import lombok.Setter;
 import me.lorenzo0111.bedwars.api.BedwarsAPI;
+import me.lorenzo0111.bedwars.api.BedwarsProvider;
+import me.lorenzo0111.bedwars.api.data.PlayerStats;
 import me.lorenzo0111.bedwars.api.game.TeamAssigner;
 import me.lorenzo0111.bedwars.api.game.config.ConfigLocation;
 import me.lorenzo0111.bedwars.api.game.config.GameConfiguration;
@@ -33,6 +35,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 
 @Getter
@@ -59,6 +63,7 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
     @SuppressWarnings("ConstantConditions")
     public void onEnable() {
         instance = this;
+        BedwarsProvider.setInstance(this);
 
         if (new File(this.getDataFolder(), "config.yml").exists())
             this.firstRun = false;
@@ -193,5 +198,15 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
     @Override
     public void registerSpecialItem(SpecialItem item) throws IllegalArgumentException {
         this.specialItemFactory.registerSpecialItem(item);
+    }
+
+    @Override
+    public CompletableFuture<PlayerStats> getStats(UUID uuid) {
+        return database.getStats(uuid);
+    }
+
+    @Override
+    public void updateStats(UUID uuid, PlayerStats stats) {
+        database.updateStats(stats);
     }
 }
