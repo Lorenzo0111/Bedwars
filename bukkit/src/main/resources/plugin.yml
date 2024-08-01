@@ -7,6 +7,7 @@ depend:
   - SlimeWorldManager
 softdepend:
   - DecentHolograms
+  - PlaceholderAPI
 commands:
   bedwars:
     aliases:

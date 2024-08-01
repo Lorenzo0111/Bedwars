@@ -18,6 +18,7 @@ import me.lorenzo0111.bedwars.data.StatsManager;
 import me.lorenzo0111.bedwars.game.GameManager;
 import me.lorenzo0111.bedwars.game.setup.SetupManager;
 import me.lorenzo0111.bedwars.game.assign.RandomTeamAssigner;
+import me.lorenzo0111.bedwars.hooks.BedwarsPlaceholders;
 import me.lorenzo0111.bedwars.hooks.hologram.HologramHookWrapper;
 import me.lorenzo0111.bedwars.hooks.WorldsHook;
 import me.lorenzo0111.bedwars.hooks.scoreboard.ScoreboardHookWrapper;
@@ -104,6 +105,9 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
 
         // ******** Tasks ********
 
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new BedwarsPlaceholders(this).register();
+        }
     }
 
 

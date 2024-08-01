@@ -19,6 +19,7 @@ import java.util.UUID;
 
 public class GameManager implements AbstractGameManager {
     private final BedwarsPlugin plugin;
+    @Getter private int arenas = 0;
     private final File folder;
     @Getter
     private final List<AbstractGame> games = new ArrayList<>();
@@ -36,6 +37,7 @@ public class GameManager implements AbstractGameManager {
             this.folder.mkdirs();
         }
 
+        this.arenas = 0;
         for (File file : Objects.requireNonNullElse(
                 this.folder.listFiles(file -> file.getName().endsWith(".yml")), new File[0])) {
             if (!file.exists()) {
@@ -51,6 +53,8 @@ public class GameManager implements AbstractGameManager {
                 AbstractGame game = new Game(gameConfig);
                 this.games.add(game);
             }
+
+            arenas++;
         }
     }
 
