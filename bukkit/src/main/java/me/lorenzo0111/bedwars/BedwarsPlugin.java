@@ -14,6 +14,7 @@ import me.lorenzo0111.bedwars.api.items.SpecialItem;
 import me.lorenzo0111.bedwars.api.scoreboard.ScoreboardHook;
 import me.lorenzo0111.bedwars.commands.BedwarsCommand;
 import me.lorenzo0111.bedwars.data.SQLHandler;
+import me.lorenzo0111.bedwars.data.StatsManager;
 import me.lorenzo0111.bedwars.game.GameManager;
 import me.lorenzo0111.bedwars.game.setup.SetupManager;
 import me.lorenzo0111.bedwars.game.assign.RandomTeamAssigner;
@@ -22,6 +23,7 @@ import me.lorenzo0111.bedwars.hooks.WorldsHook;
 import me.lorenzo0111.bedwars.hooks.scoreboard.ScoreboardHookWrapper;
 import me.lorenzo0111.bedwars.listeners.GameListener;
 import me.lorenzo0111.bedwars.listeners.LobbyListener;
+import me.lorenzo0111.bedwars.listeners.StatsListener;
 import me.lorenzo0111.bedwars.shop.ShopManager;
 import me.lorenzo0111.bedwars.shop.SpecialItemFactory;
 import me.lorenzo0111.bedwars.shop.items.FireballItem;
@@ -50,6 +52,7 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
     private SetupManager setupManager;
     private SpecialItemFactory specialItemFactory;
     private ShopManager shopManager;
+    private StatsManager statsManager;
     @Setter private TeamAssigner teamAssigner;
 
     @Override
@@ -83,6 +86,7 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
         this.setupManager = new SetupManager(this);
         this.specialItemFactory = new SpecialItemFactory();
         this.shopManager = new ShopManager(this);
+        this.statsManager = new StatsManager(this);
 
         this.specialItemFactory.registerSpecialItem(new FireballItem());
 
@@ -95,6 +99,7 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
         // ******** Listeners ********
         this.getServer().getPluginManager().registerEvents(new GameListener(this), this);
         this.getServer().getPluginManager().registerEvents(new LobbyListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new StatsListener(this), this);
 
         // ******** Tasks ********
 
