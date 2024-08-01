@@ -21,4 +21,28 @@ public class PlayerStats {
     public void update() {
         BedwarsProvider.getInstance().updateStats(uuid, this);
     }
+
+    public void addKill() {
+        this.kills++;
+    }
+
+    public void addDeath() {
+        this.deaths++;
+    }
+
+    public void addWin() {
+        this.wins++;
+    }
+
+    public void addLoss() {
+        this.losses++;
+    }
+
+    public void addBed() {
+        this.beds++;
+    }
+
+    public void addGame() {
+        this.games++;
+    }
 }

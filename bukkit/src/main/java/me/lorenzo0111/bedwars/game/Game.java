@@ -1,6 +1,10 @@
 package me.lorenzo0111.bedwars.game;
 
 import me.lorenzo0111.bedwars.BedwarsPlugin;
+import me.lorenzo0111.bedwars.api.events.BedwarsEndEvent;
+import me.lorenzo0111.bedwars.api.events.BedwarsKillEvent;
+import me.lorenzo0111.bedwars.api.events.BedwarsPlayerRemoveEvent;
+import me.lorenzo0111.bedwars.api.events.BedwarsStartEvent;
 import me.lorenzo0111.bedwars.api.game.AbstractGame;
 import me.lorenzo0111.bedwars.api.game.GameState;
 import me.lorenzo0111.bedwars.api.game.config.GameConfiguration;
@@ -141,6 +145,7 @@ public class Game extends AbstractGame {
                 );
 
         players.forEach(scoreboard::show);
+        plugin.callEvent(new BedwarsStartEvent(this));
     }
 
     @Override
@@ -195,6 +200,8 @@ public class Game extends AbstractGame {
                 .replace("%team%", winner.name())
                 .replace("%color%", winner.toString()));
 
+        plugin.callEvent(new BedwarsEndEvent(this, teams.getOrDefault(winner, new ArrayList<>())));
+
         this.stop();
     }
 
@@ -212,10 +219,14 @@ public class Game extends AbstractGame {
                     .replace("%killer%", killer.getName())
                     .replace("%player_color%", team.toString())
                     .replace("%player%", event.getEntity().getName()));
+
+            plugin.callEvent(new BedwarsKillEvent(this, killer, event.getEntity()));
         } else {
             this.broadcast(plugin.getPrefixed("death")
                     .replace("%player_color%", team.toString())
                     .replace("%player%", event.getEntity().getName()));
+
+            plugin.callEvent(new BedwarsKillEvent(this, null, event.getEntity()));
         }
 
         event.setDroppedExp(0);
@@ -241,6 +252,8 @@ public class Game extends AbstractGame {
                         .findFirst()
                         .ifPresent(winner -> this.onWin(winner.getKey()));
             }
+
+            plugin.callEvent(new BedwarsPlayerRemoveEvent(this, event.getEntity()));
             return;
         }
 

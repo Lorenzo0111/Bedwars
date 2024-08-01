@@ -20,7 +20,8 @@ public class StatsManager {
     }
 
     public void unload(@NotNull Player player) {
-        this.stats.remove(player);
+        PlayerStats removed = this.stats.remove(player);
+        if (removed != null) removed.update();
     }
 
     public PlayerStats get(@NotNull Player player) {

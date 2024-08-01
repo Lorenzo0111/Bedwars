@@ -33,6 +33,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.event.Event;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -188,6 +189,10 @@ public final class BedwarsPlugin extends JavaPlugin implements BedwarsAPI {
         }
 
         this.log("&c&m---------------------------------------------------");
+    }
+
+    public void callEvent(Event event) {
+        scheduler.ensureSync(()  -> Bukkit.getPluginManager().callEvent(event));
     }
 
     @Override
